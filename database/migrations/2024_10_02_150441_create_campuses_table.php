@@ -13,6 +13,22 @@ return new class extends Migration
     {
         Schema::create('campuses', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('description');
+            $table->string('date');
+            $table->float('address_latitude');
+            $table->float('address_longitude');
+            $table->string('web_address');
+            $table->string('phone_number');
+            $table->integer('rank_score');
+            $table->integer('number_of_graduates');
+            $table->integer('number_of_registrants');
+
+            $table->unsignedBigInteger('accreditation_id');
+ 
+            $table->foreign('accreditation_id')->references('id')->on('accreditations');
+
+
             $table->timestamps();
         });
     }

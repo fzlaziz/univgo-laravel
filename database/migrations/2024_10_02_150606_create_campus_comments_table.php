@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('campus_comments', function (Blueprint $table) {
             $table->id();
+            $table->longText('text');
+
+            $table->unsignedBigInteger('campus_id');
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('campus_id')->references('id')->on('campuses');
+
             $table->timestamps();
         });
     }

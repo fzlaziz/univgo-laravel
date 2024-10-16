@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('accreditations', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }

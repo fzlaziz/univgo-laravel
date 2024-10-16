@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('news_comments', function (Blueprint $table) {
             $table->id();
+            $table->text('text');
+
+            $table->unsignedBigInteger('news_id');
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('news_id')->references('id')->on('news');
+
+
             $table->timestamps();
         });
     }

@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('galleries', function (Blueprint $table) {
             $table->id();
+
+            $table->string('name');
+            $table->text('description');
+            $table->string('file_location');
+
+            $table->unsignedBigInteger('campus_id');
+            $table->foreign('campus_id')->references('id')->on('campuses');
+            
             $table->timestamps();
         });
     }

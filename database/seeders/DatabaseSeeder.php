@@ -13,11 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call(MasterFacultySeeder::class);
+        $this->call(MasterStudyProgramSeeder::class);
+        $this->call(FacultySeeder::class);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $this->call(AccreditationSeeder::class);
+        $this->call(DegreeLevelSeeder::class);
+
+        $this->call(CampusSeeder::class);
+        $this->call(CampusDegreeLevelSeeder::class);
+        
+        $this->call(StudyProgramSeeder::class);
     }
 }

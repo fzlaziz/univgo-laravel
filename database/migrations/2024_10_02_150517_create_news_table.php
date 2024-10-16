@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('slug');
+            $table->longText('content');
+            $table->string('file_location');
+
+            $table->unsignedBigInteger('campus_id');
+ 
+            $table->foreign('campus_id')->references('id')->on('campuses');
+
             $table->timestamps();
         });
     }

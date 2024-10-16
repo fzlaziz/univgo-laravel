@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('facilities', function (Blueprint $table) {
+        Schema::create('campus_degree_level', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->text('description');
-            $table->string('file_location');
 
             $table->unsignedBigInteger('campus_id');
             $table->foreign('campus_id')->references('id')->on('campuses');
+
+            $table->unsignedBigInteger('degree_level_id');
+            $table->foreign('degree_level_id')->references('id')->on('degree_levels');
 
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('facilities');
+        Schema::dropIfExists('campus_degree_level');
     }
 };
