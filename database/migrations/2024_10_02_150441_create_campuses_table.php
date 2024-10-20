@@ -25,9 +25,10 @@ return new class extends Migration
             $table->integer('number_of_registrants');
 
             $table->unsignedBigInteger('accreditation_id');
+            $table->unsignedBigInteger('district_code_id');
  
             $table->foreign('accreditation_id')->references('id')->on('accreditations');
-
+            $table->foreign('district_code_id')->references('id')->on('districts');
 
             $table->timestamps();
         });
