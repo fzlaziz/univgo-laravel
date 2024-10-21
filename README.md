@@ -8,7 +8,7 @@ git clone https://github.com/fzlaziz/univgo-laravel.git
 cd univgo-laravel
 composer install
 
-mv .env.example .env
+cp .env.example .env
 //change the database name (DB_DATABASE) to whatever you have, username (DB_USERNAME) and password (DB_PASSWORD) field correspond to your configuration.
 
 php artisan key:generate
