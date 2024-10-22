@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->name('name');
+            $table->string('name');
             $table->float('address_latitude');
             $table->float('address_longitude');
 
             $table->unsignedBigInteger('education_status_id');
             $table->unsignedBigInteger('campus_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('district_id');
+            $table->unsignedBigInteger('village_id')->nullable();
             $table->foreign('education_status_id')->references('id')->on('education_statuses');
             $table->foreign('campus_id')->references('id')->on('campuses');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('district_id')->references('id')->on('districts');
+            $table->foreign('village_id')->references('id')->on('indonesia_villages');
             $table->timestamps();
         });
     }

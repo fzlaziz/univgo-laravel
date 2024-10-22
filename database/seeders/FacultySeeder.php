@@ -19,6 +19,7 @@ class FacultySeeder extends Seeder
         DB::table('faculties')->insert([
             [
                 'master_faculty_id' => $masterTeknik->id,
+                'campus_id' => 1,
                 'name' => 'Fakultas Teknik',
                 'description' => 'Fakultas yang mengajarkan tentang pembangunan infrastruktur dan konstruksi.',
                 'created_at' => now(),
@@ -26,6 +27,7 @@ class FacultySeeder extends Seeder
             ],
             [
                 'master_faculty_id' => $masterIlmuKomputer->id,
+                'campus_id' => 2,
                 'name' => 'Fakultas Komputer',
                 'description' => 'Fakultas yang mempelajari integrasi teknologi informasi dan manajemen.',
                 'created_at' => now(),

@@ -25,17 +25,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::factory()->create(['name' => 'Abimanyu']);
+        User::factory()->create(['name' => 'Pratama']);
+
         $this->call(MasterFacultySeeder::class);
         $this->call(MasterStudyProgramSeeder::class);
-        $this->call(FacultySeeder::class);
 
         $this->call(AccreditationSeeder::class);
         $this->call(DegreeLevelSeeder::class);
 
         $this->call(CampusSeeder::class);
+        $this->call(FacultySeeder::class);
         $this->call(CampusDegreeLevelSeeder::class);
-        
+        $this->call(AdmissionRouteSeeder::class);
+        $this->call(AdmissionRouteCampusSeeder::class);
+
+        $this->call(NewsSeeder::class);
+        $this->call(NewsCommentSeeder::class);
         $this->call(StudyProgramSeeder::class);
+        
         $this->call([
             ProvincesSeeder::class,
             CitiesSeeder::class,

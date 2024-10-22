@@ -19,7 +19,7 @@ class CampusSeeder extends Seeder
         if ($accreditation) {
             DB::table('campuses')->insert([
                 [
-                    'name' => 'Politeknik Negesri Semarang',
+                    'name' => 'Politeknik Negeri Semarang',
                     'description' => 'polines',
                     'date' => '2000-01-01', // Ganti dengan tanggal sesuai kebutuhan
                     'address_latitude' => -6.123456, // Ganti dengan koordinat yang sesuai

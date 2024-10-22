@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
 
+            $table->unsignedBigInteger('campus_id')->nullable();
             $table->unsignedBigInteger('master_faculty_id');
+            $table->foreign('campus_id')->references('id')->on('campuses');
             $table->foreign('master_faculty_id')->references('id')->on('faculties');
 
             $table->timestamps();
