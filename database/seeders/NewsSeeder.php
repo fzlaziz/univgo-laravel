@@ -14,9 +14,9 @@ class NewsSeeder extends Seeder
     public function run(): void
     {
         // Mencari ID dari campus dengan deskripsi 'polines'
-        $campusPolines = DB::table('campuses')->where('description', 'polines')->first();
+        $campusPolines = DB::table('campuses')->where('id', '1')->first();
         // Mencari ID dari campus dengan deskripsi 'undip'
-        $campusUndip = DB::table('campuses')->where('description', 'undip')->first();
+        $campusUndip = DB::table('campuses')->where('id', '2')->first();
 
         if ($campusPolines) {
             DB::table('news')->insert([

@@ -14,10 +14,10 @@ class AdmissionRouteCampusSeeder extends Seeder
     public function run(): void
     {
         // Mencari ID dari campus dengan deskripsi 'polines'
-        $campusPolines = DB::table('campuses')->where('description', 'polines')->first();
+        $campusPolines = DB::table('campuses')->where('id', '1')->first();
 
         // Mencari ID dari campus dengan deskripsi 'undip'
-        $campusUndip = DB::table('campuses')->where('description', 'undip')->first();
+        $campusUndip = DB::table('campuses')->where('id', '2')->first();
 
         // Mencari ID dari admission routes
         $admissionUjian = DB::table('admission_routes')->where('name', 'Ujian')->first();

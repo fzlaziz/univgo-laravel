@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Accreditation;
 use App\Models\Campus;
 
 class StudyProgram extends Model
@@ -25,6 +26,16 @@ class StudyProgram extends Model
     public function campus(): BelongsTo
     {
         return $this->belongsTo(Campus::class);
+    }
+
+    public function accreditation(): BelongsTo
+    {
+        return $this->belongsTo(Accreditation::class);
+    }
+
+    public function degree_level(): BelongsTo
+    {
+        return $this->belongsTo(DegreeLevel::class);
     }
 
 }

@@ -26,6 +26,13 @@ class MasterStudyProgramSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name' => 'test',
+                'description' => 'Program studi yang fokus pada pengembangan teknologi komputer dan rekayasa perangkat keras.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
         ]);
     }
 }

@@ -26,6 +26,88 @@ class MasterFacultySeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name' => 'Keperawatan',
+                'description' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Kebidanan',
+                'description' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Gizi',
+                'description' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Teknik Radiodiagnostik dan Radioterapi',
+                'description' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Kesehatan Gigi',
+                'description' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'name' => 'Analis Kesehatan',
+                'description' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            
+            [
+                'name' => 'Rekam Medis dan Informasi Kesehatan',
+                'description' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+
+            [
+                'name' => 'Teknik Mesin',
+                'description' => '.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'name' => 'Teknik Elektro',
+                'description' => '.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'name' => 'Akuntansi',
+                'description' => '.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'name' => 'Administrasi Bisnis',
+                'description' => '.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'name' => 'Teknik Sipil',
+                'description' => '.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            
         ]);
     }
 }
