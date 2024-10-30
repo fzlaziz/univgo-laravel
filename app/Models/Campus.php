@@ -68,4 +68,8 @@ class Campus extends Model
         return $this->belongsToMany(AdmissionRoute::class);
     }
 
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
 }

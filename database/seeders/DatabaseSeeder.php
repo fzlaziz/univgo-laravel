@@ -29,7 +29,12 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->create(['name' => 'Abimanyu']);
         User::factory()->create(['name' => 'Pratama']);
-
+        $this->call([
+            ProvincesSeeder::class,
+            CitiesSeeder::class,
+            DistrictsSeeder::class,
+            VillagesSeeder::class,
+        ]);
         $this->call(MasterFacultySeeder::class);
         $this->call(MasterStudyProgramSeeder::class);
 
@@ -47,11 +52,6 @@ class DatabaseSeeder extends Seeder
         $this->call(StudyProgramSeeder::class);
         $this->call(CampusRankingSeeder::class);
 
-        $this->call([
-            ProvincesSeeder::class,
-            CitiesSeeder::class,
-            DistrictsSeeder::class,
-            VillagesSeeder::class,
-        ]);
+
     }
 }

@@ -29,10 +29,10 @@ return new class extends Migration
             $table->integer('max_single_tuition')->nullable();
 
             $table->unsignedBigInteger('accreditation_id');
-            $table->unsignedBigInteger('village_id')->nullable();
+            $table->unsignedBigInteger('district_id')->nullable();
 
             $table->foreign('accreditation_id')->references('id')->on('accreditations');
-            $table->foreign('village_id')->references('id')->on('indonesia_villages');
+            $table->foreign('district_id')->references('id')->on('indonesia_districts');
 
             $table->timestamps();
         });
