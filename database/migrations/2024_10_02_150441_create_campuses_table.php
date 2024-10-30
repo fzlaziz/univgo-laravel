@@ -30,9 +30,11 @@ return new class extends Migration
 
             $table->unsignedBigInteger('accreditation_id');
             $table->unsignedBigInteger('district_id')->nullable();
+            $table->unsignedBigInteger('campus_type_id')->nullable();
 
             $table->foreign('accreditation_id')->references('id')->on('accreditations');
             $table->foreign('district_id')->references('id')->on('indonesia_districts');
+            $table->foreign('campus_type_id')->references('id')->on('campus_types');
 
             $table->timestamps();
         });

@@ -72,4 +72,10 @@ class Campus extends Model
     {
         return $this->belongsTo(District::class);
     }
+
+    public function campus_type(): BelongsTo
+    {
+        return $this->belongsTo(CampusType::class);
+    }
 }
+

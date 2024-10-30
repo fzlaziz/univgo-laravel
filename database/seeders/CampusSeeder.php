@@ -14,6 +14,16 @@ class CampusSeeder extends Seeder
     public function run(): void
     {
         $accreditation = DB::table('accreditations')->where('name', 'Baik Sekali')->first();
+        $ptn_id = DB::table('campus_types')->where('name', 'PTN')->value('id');
+        $politeknik_id = DB::table('campus_types')->where('name', 'Politeknik')->value('id');
+        $swasta_id = DB::table('campus_types')->where('name', 'Swasta')->value('id');
+
+        $unggul_id = DB::table('accreditations')->where('name', 'Unggul')->value('id');
+        $baik_sekali_id = DB::table('accreditations')->where('name', 'Baik Sekali')->value('id');
+        $baik_id = DB::table('accreditations')->where('name', 'Baik')->value('id');
+        $a_id = DB::table('accreditations')->where('name', 'A')->value('id');
+        $b_id = DB::table('accreditations')->where('name', 'B')->value('id');
+        $c_id = DB::table('accreditations')->where('name', 'C')->value('id');
 
         if ($accreditation) {
             DB::table('campuses')->insert([
@@ -31,7 +41,8 @@ class CampusSeeder extends Seeder
                     'number_of_registrants' => 3000,
                     'min_single_tuition'=> 500000,
                     'max_single_tuition'=> 7500000,
-                    'accreditation_id' => $accreditation->id,
+                    'campus_type_id' => $politeknik_id,
+                    'accreditation_id' => $a_id,
                     'district_id' => 3181,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -50,7 +61,8 @@ class CampusSeeder extends Seeder
                     'number_of_registrants' => 1200,
                     'min_single_tuition'=> 500000,
                     'max_single_tuition'=> 22000000,
-                    'accreditation_id' => $accreditation->id,
+                    'accreditation_id' => $unggul_id,
+                    'campus_type_id' => $ptn_id,
                     'district_id' => 3181,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -70,7 +82,8 @@ class CampusSeeder extends Seeder
                     'number_of_registrants' => 1100,
                     'min_single_tuition'=> 500000,
                     'max_single_tuition'=> 22000000,
-                    'accreditation_id' => $accreditation->id,
+                    'accreditation_id' => $unggul_id,
+                    'campus_type_id' => $ptn_id,
                     'district_id' => 3183,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -90,7 +103,8 @@ class CampusSeeder extends Seeder
                     'number_of_registrants' => 1000,
                     'min_single_tuition'=> 4625000,
                     'max_single_tuition'=> 9250000,
-                    'accreditation_id' => $accreditation->id,
+                    'accreditation_id' => $unggul_id,
+                    'campus_type_id' => $swasta_id,
                     'district_id' => 3172,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -110,7 +124,8 @@ class CampusSeeder extends Seeder
                     'number_of_registrants' => 900,
                     'min_single_tuition'=> 5450000,
                     'max_single_tuition'=> 12850000,
-                    'accreditation_id' => $accreditation->id,
+                    'accreditation_id' => $baik_sekali_id,
+                    'campus_type_id' => $politeknik_id,
                     'district_id' => 3182,
                     'created_at' => now(),
                     'updated_at' => now(),

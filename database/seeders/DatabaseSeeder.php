@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(AccreditationSeeder::class);
         $this->call(DegreeLevelSeeder::class);
+        $this->call(CampusTypeSeeder::class);
 
         $this->call(CampusSeeder::class);
         $this->call(FacultySeeder::class);

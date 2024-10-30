@@ -37,7 +37,7 @@ Route::get('/province', function () {
 });
 
 Route::get('/campuses', function () {
-    return Campus::with(['accreditation','district.city.province','campus_rankings'])
+    return Campus::with(['accreditation','district.city.province','campus_rankings','campus_type'])
         ->get()
         ->map(function ($campus) {
             $bestRanking = $campus->campus_rankings->min('rank');
@@ -64,6 +64,8 @@ Route::get('/campuses', function () {
                 'city_id' => $campus->district->city->id,
                 'province' => ucwords(strtolower($campus->district->city->province->name)),
                 'province_id' => $campus->district->city->province->id,
+                'campus_type_id' => $campus->campus_type->id,
+                'campus_type' => $campus->campus_type->name,
                 'created_at' => $campus->created_at,
                 'updated_at' => $campus->updated_at,
                 'accreditation' => [
