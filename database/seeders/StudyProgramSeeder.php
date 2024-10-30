@@ -13,26 +13,13 @@ class StudyProgramSeeder extends Seeder
      */
     public function run(): void
     {
-        // Mencari ID dari campus dengan deskripsi 'polines'
-        $campus = DB::table('campuses')->where('id', '1')->first();
-
-        // Mencari ID dari akreditasi yang memiliki nama 'Baik Sekali'
         $accreditation = DB::table('accreditations')->where('name', 'Baik Sekali')->first();
 
-        // Mencari ID dari degree level S1 dan S2
-        $degreeLevelS1 = DB::table('degree_levels')->where('name', 'S1')->first();
-        $degreeLevelS2 = DB::table('degree_levels')->where('name', 'S2')->first();
+        $S1 = DB::table('degree_levels')->where('name', 'S1')->first();
+        $S2 = DB::table('degree_levels')->where('name', 'S2')->first();
         $MST = DB::table('degree_levels')->where('name', 'S2')->first();
         $D3 = DB::table('degree_levels')->where('name', 'D3')->first();
         $D4 = DB::table('degree_levels')->where('name', 'D4')->first();
-        
-        // Mencari ID dari faculty
-        $facultyKomputer = DB::table('faculties')->where('name', 'Fakultas Komputer')->first();
-        $facultyTeknik = DB::table('faculties')->where('name', 'Fakultas Teknik')->first();
-
-        // Mencari ID dari master study program
-        $masterTeknologiRekayasaKomputer = DB::table('master_study_programs')->where('name', 'Teknologi Rekayasa Komputer')->first();
-        $masterTeknikMesin = DB::table('master_study_programs')->where('name', 'Teknik Mesin')->first();
 
         // poltekkes
         DB::table('study_programs')->insert([
@@ -203,11 +190,7 @@ class StudyProgramSeeder extends Seeder
             ],
         ]);
 
-
-        // polines
-
         DB::table('study_programs')->insert([
-            // Jurusan Teknik Mesin
             [
                 'name' => 'Teknik Mesin',
                 'description' => '(D3)',
@@ -252,8 +235,6 @@ class StudyProgramSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        
-            // Jurusan Teknik Elektro
             [
                 'name' => 'Teknik Listrik',
                 'description' => '(D3)',
@@ -353,8 +334,6 @@ class StudyProgramSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        
-            // Jurusan Akuntansi
             [
                 'name' => 'Akuntansi',
                 'description' => '(D3)',
@@ -421,8 +400,6 @@ class StudyProgramSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        
-            // Jurusan Administrasi Bisnis
             [
                 'name' => 'Administrasi Bisnis',
                 'description' => '(D3)',
@@ -467,8 +444,6 @@ class StudyProgramSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        
-            // Jurusan Teknik Sipil
             [
                 'name' => 'Teknik Konstruksi Gedung',
                 'description' => '(D3)',
@@ -525,7 +500,7 @@ class StudyProgramSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
-        
-        
+
+
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CampusRanking;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,6 +18,7 @@ use Database\Seeders\CampusDegreeLevelSeeder;
 use Laravolt\Indonesia\Seeds\DistrictsSeeder;
 use Laravolt\Indonesia\Seeds\ProvincesSeeder;
 use Database\Seeders\MasterStudyProgramSeeder;
+use Database\Seeders\CampusRankingSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,7 +45,8 @@ class DatabaseSeeder extends Seeder
         $this->call(NewsSeeder::class);
         $this->call(NewsCommentSeeder::class);
         $this->call(StudyProgramSeeder::class);
-        
+        $this->call(CampusRankingSeeder::class);
+
         $this->call([
             ProvincesSeeder::class,
             CitiesSeeder::class,

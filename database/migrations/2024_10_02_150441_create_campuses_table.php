@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('date');
+            $table->string('logo_path')->nullable();
             $table->float('address_latitude');
             $table->float('address_longitude');
             $table->string('web_address');
@@ -24,9 +25,12 @@ return new class extends Migration
             $table->integer('number_of_graduates');
             $table->integer('number_of_registrants');
 
+            $table->integer('min_single_tuition')->nullable();
+            $table->integer('max_single_tuition')->nullable();
+
             $table->unsignedBigInteger('accreditation_id');
             $table->unsignedBigInteger('village_id')->nullable();
- 
+
             $table->foreign('accreditation_id')->references('id')->on('accreditations');
             $table->foreign('village_id')->references('id')->on('indonesia_villages');
 

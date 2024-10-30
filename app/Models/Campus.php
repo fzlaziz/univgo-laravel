@@ -53,6 +53,11 @@ class Campus extends Model
         return $this->hasMany(News::class);
     }
 
+    public function campus_rankings(): HasMany
+    {
+        return $this->hasMany(CampusRanking::class);
+    }
+
     public function degree_levels(): BelongsToMany
     {
         return $this->belongsToMany(DegreeLevel::class);

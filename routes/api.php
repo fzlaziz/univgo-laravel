@@ -29,9 +29,38 @@ Route::get('/news/{id}', function ($id) {
 
 
 Route::get('/campuses', function () {
-    return Campus::with([
-        'accreditation',
-    ])->get();    
+    return Campus::with(['accreditation'])
+        ->get()
+        ->map(function ($campus) {
+            $bestRanking = $campus->campus_rankings->min('rank');
+            $rankScore = $bestRanking !== null ? $bestRanking : null;
+            return [
+                'id' => $campus->id,
+                'name' => $campus->name,
+                'description' => $campus->description,
+                'date' => $campus->date,
+                'logo_path' => $campus->logo_path,
+                'address_latitude' => $campus->address_latitude,
+                'address_longitude' => $campus->address_longitude,
+                'web_address' => $campus->web_address,
+                'phone_number' => $campus->phone_number,
+                'rank_score' => $rankScore,
+                'number_of_graduates' => $campus->number_of_graduates,
+                'number_of_registrants' => $campus->number_of_registrants,
+                'min_single_tuition' => $campus->min_single_tuition,
+                'max_single_tuition' => $campus->max_single_tuition,
+                'accreditation_id' => $campus->accreditation_id,
+                'village_id' => $campus->village_id,
+                'created_at' => $campus->created_at,
+                'updated_at' => $campus->updated_at,
+                'accreditation' => [
+                    'id' => $campus->accreditation->id,
+                    'name' => $campus->accreditation->name,
+                    'created_at' => $campus->accreditation->created_at,
+                    'updated_at' => $campus->accreditation->updated_at,
+                ],
+            ];
+        });
 });
 
 Route::get('/study_programs', function () {
