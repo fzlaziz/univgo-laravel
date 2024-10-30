@@ -30,6 +30,11 @@ class DegreeLevelSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'name' => 'D2',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'name' => 'D3',
                 'created_at' => now(),
                 'updated_at' => now(),

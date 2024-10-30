@@ -14,54 +14,148 @@ class CampusDegreeLevelSeeder extends Seeder
     {
         // Mencari ID dari campus dengan deskripsi 'polines'
         $campusPolines = DB::table('campuses')->where('id', '1')->first();
-
-        // Mencari ID dari campus dengan deskripsi 'undip'
         $campusUndip = DB::table('campuses')->where('id', '2')->first();
+        $campusUnnes = DB::table('campuses')->where('id', '3')->first();
+        $campusUdinus = DB::table('campuses')->where('id', '4')->first();
+        $campusPoltekkes = DB::table('campuses')->where('id', '5')->first();
 
-        // Mencari ID dari degree level S1 dan S2
-        $degreeLevelS1 = DB::table('degree_levels')->where('name', 'S1')->first();
-        $degreeLevelS2 = DB::table('degree_levels')->where('name', 'S2')->first();
+        $S1 = DB::table('degree_levels')->where('name', 'S1')->first();
+        $S2 = DB::table('degree_levels')->where('name', 'S2')->first();
+        $S3 = DB::table('degree_levels')->where('name', 'S3')->first();
+        $MST = DB::table('degree_levels')->where('name', 'S2')->first();
+        $D3 = DB::table('degree_levels')->where('name', 'D3')->first();
+        $D4 = DB::table('degree_levels')->where('name', 'D4')->first();
 
         // Memastikan semua ID ditemukan sebelum menyimpan data
-        if ($campusPolines && $degreeLevelS1 && $degreeLevelS2) {
+        if ($campusPolines) {
             DB::table('campus_degree_level')->insert([
                 [
                     'campus_id' => $campusPolines->id,
-                    'degree_level_id' => $degreeLevelS1->id,
+                    'degree_level_id' => $D3->id,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
                 [
                     'campus_id' => $campusPolines->id,
-                    'degree_level_id' => $degreeLevelS2->id,
+                    'degree_level_id' => $D4->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'campus_id' => $campusPolines->id,
+                    'degree_level_id' => $MST->id,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
             ]);
         } else {
-            // Jika ada ID yang tidak ditemukan, bisa tambahkan log atau pesan
-            echo "Salah satu atau lebih data untuk Polines tidak ditemukan.\n";
+            echo "Salah satu atau lebih data tidak ditemukan.\n";
         }
 
-        // Memastikan ID untuk Undip ditemukan sebelum menyimpan data
-        if ($campusUndip && $degreeLevelS1 && $degreeLevelS2) {
+        if ($campusUndip) {
             DB::table('campus_degree_level')->insert([
                 [
                     'campus_id' => $campusUndip->id,
-                    'degree_level_id' => $degreeLevelS1->id,
+                    'degree_level_id' => $S1->id,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
                 [
                     'campus_id' => $campusUndip->id,
-                    'degree_level_id' => $degreeLevelS2->id,
+                    'degree_level_id' => $S2->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'campus_id' => $campusUndip->id,
+                    'degree_level_id' => $S3->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'campus_id' => $campusUndip->id,
+                    'degree_level_id' => $D3->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'campus_id' => $campusUndip->id,
+                    'degree_level_id' => $D4->id,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
             ]);
         } else {
-            // Jika ada ID yang tidak ditemukan, bisa tambahkan log atau pesan
-            echo "Salah satu atau lebih data untuk Undip tidak ditemukan.\n";
+            echo "Salah satu atau lebih data dak ditemukan.\n";
+        }
+
+        if ($campusUnnes) {
+            DB::table('campus_degree_level')->insert([
+                [
+                    'campus_id' => $campusUnnes->id,
+                    'degree_level_id' => $S1->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'campus_id' => $campusUnnes->id,
+                    'degree_level_id' => $S2->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'campus_id' => $campusUnnes->id,
+                    'degree_level_id' => $S3->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        } else {
+            echo "Salah satu atau lebih data dak ditemukan.\n";
+        }
+
+        if ($campusUdinus) {
+            DB::table('campus_degree_level')->insert([
+                [
+                    'campus_id' => $campusUdinus->id,
+                    'degree_level_id' => $S1->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'campus_id' => $campusUdinus->id,
+                    'degree_level_id' => $S2->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'campus_id' => $campusUdinus->id,
+                    'degree_level_id' => $S3->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        } else {
+            echo "Salah satu atau lebih data tidak ditemukan.\n";
+        }
+
+        if ($campusPoltekkes) {
+            DB::table('campus_degree_level')->insert([
+                [
+                    'campus_id' => $campusPoltekkes->id,
+                    'degree_level_id' => $D3->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'campus_id' => $campusPoltekkes->id,
+                    'degree_level_id' => $D4->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        } else {
+            echo "Salah satu atau lebih data tidak ditemukan.\n";
         }
     }
 }

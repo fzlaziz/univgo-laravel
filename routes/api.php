@@ -37,7 +37,7 @@ Route::get('/province', function () {
 });
 
 Route::get('/campuses', function () {
-    return Campus::with(['accreditation','district.city.province','campus_rankings','campus_type'])
+    return Campus::with(['accreditation','district.city.province','campus_rankings','campus_type','degree_levels'])
         ->get()
         ->map(function ($campus) {
             $bestRanking = $campus->campus_rankings->min('rank');
@@ -74,6 +74,12 @@ Route::get('/campuses', function () {
                     'created_at' => $campus->accreditation->created_at,
                     'updated_at' => $campus->accreditation->updated_at,
                 ],
+                'degree_levels' => $campus->degree_levels->map(function ($degreeLevel) {
+                    return [
+                        'id' => $degreeLevel->id,
+                        'name' => $degreeLevel->name,
+                    ];
+                }),
             ];
         });
 });
