@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->string('date');
+            $table->string('date_of_establishment');
             $table->string('logo_path')->nullable();
             $table->float('address_latitude');
             $table->float('address_longitude');

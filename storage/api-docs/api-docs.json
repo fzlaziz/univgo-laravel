@@ -1,0 +1,184 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "UNIVGO API Documentation",
+        "description": "API Documentation for UNIVGO application",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/accreditations": {
+            "get": {
+                "tags": [
+                    "Accreditations"
+                ],
+                "summary": "Get list of accreditations",
+                "operationId": "97788606019826bbae6bd226131d728b",
+                "responses": {
+                    "200": {
+                        "description": "List of accreditations"
+                    }
+                }
+            }
+        },
+        "/api/campuses": {
+            "get": {
+                "tags": [
+                    "Campuses"
+                ],
+                "summary": "Get list of campuses with details",
+                "operationId": "bd58d1112a3bd53a634b7ad96c81a06e",
+                "responses": {
+                    "200": {
+                        "description": "List of campuses with details"
+                    }
+                }
+            }
+        },
+        "/api/campus_types": {
+            "get": {
+                "tags": [
+                    "Campus Types"
+                ],
+                "summary": "Get list of campus types",
+                "operationId": "8a7ccb587cf7ba1e974fe69a11eb765e",
+                "responses": {
+                    "200": {
+                        "description": "List of campus types"
+                    }
+                }
+            }
+        },
+        "/api/degree_levels": {
+            "get": {
+                "tags": [
+                    "Degree Levels"
+                ],
+                "summary": "Get list of degree levels",
+                "operationId": "8d0e14e7f54999438be17a672d7637b2",
+                "responses": {
+                    "200": {
+                        "description": "List of degree levels"
+                    }
+                }
+            }
+        },
+        "/api/districts": {
+            "get": {
+                "tags": [
+                    "Districts"
+                ],
+                "summary": "Get list of districts",
+                "operationId": "3374065fd459eae2cd92886d84d5bf3b",
+                "responses": {
+                    "200": {
+                        "description": "List of districts"
+                    }
+                }
+            }
+        },
+        "/api/news": {
+            "get": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Get list of news",
+                "operationId": "9bfe744cf19dcb58e9ab9677c29ee6c7",
+                "responses": {
+                    "200": {
+                        "description": "List of news"
+                    }
+                }
+            }
+        },
+        "/api/news/{news}": {
+            "get": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Get news detail by ID",
+                "operationId": "4c09fa11f86d11aa99aefdc9f85c1237",
+                "parameters": [
+                    {
+                        "name": "news",
+                        "in": "path",
+                        "description": "News ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "News detail and related news"
+                    },
+                    "404": {
+                        "description": "News not found"
+                    }
+                }
+            }
+        },
+        "/api/province": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "Get list of provinces",
+                "operationId": "1cd3caeaa206ffd4dd1193fdaff668b7",
+                "responses": {
+                    "200": {
+                        "description": "List of provinces"
+                    }
+                }
+            }
+        },
+        "/api/study_programs": {
+            "get": {
+                "tags": [
+                    "Study Programs"
+                ],
+                "summary": "Get list of study programs with details",
+                "operationId": "1f1ceb2f1a49328d6b9a4aee3ce0947e",
+                "responses": {
+                    "200": {
+                        "description": "List of study programs with details"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Accreditations",
+            "description": "Accreditations"
+        },
+        {
+            "name": "Campuses",
+            "description": "Campuses"
+        },
+        {
+            "name": "Campus Types",
+            "description": "Campus Types"
+        },
+        {
+            "name": "Degree Levels",
+            "description": "Degree Levels"
+        },
+        {
+            "name": "Districts",
+            "description": "Districts"
+        },
+        {
+            "name": "News",
+            "description": "News"
+        },
+        {
+            "name": "Provinces",
+            "description": "Provinces"
+        },
+        {
+            "name": "Study Programs",
+            "description": "Study Programs"
+        }
+    ]
+}

@@ -4,15 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Accreditation;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
+
 
 class AccreditationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    /**
+     * @OA\Get(
+     *     path="/api/accreditations",
+     *     tags={"Accreditations"},
+     *     summary="Get list of accreditations",
+     *     @OA\Response(response=200, description="List of accreditations"),
+     * )
+     */
     public function index()
     {
-        //
+        return Accreditation::select('id', 'name')->get();
     }
 
     /**

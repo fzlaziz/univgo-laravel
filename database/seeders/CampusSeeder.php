@@ -30,7 +30,7 @@ class CampusSeeder extends Seeder
                 [
                     'name' => 'Politeknik Negeri Semarang',
                     'description' => 'Kec. Tembalang, Kota Semarang',
-                    'date' => '2000-01-01',
+                    'date_of_establishment' => '2000-01-01',
                     'logo_path' => '/logo/logo_polines.png',
                     'address_latitude' => -7.051078422420263,
                     'address_longitude' => 110.4355492767185,
@@ -50,7 +50,7 @@ class CampusSeeder extends Seeder
                 [
                     'name' => 'Universitas Diponegoro',
                     'description' => 'Kec. Tembalang, Kota Semarang',
-                    'date' => '2005-05-05',
+                    'date_of_establishment' => '2005-05-05',
                     'logo_path' => '/logo/logo_undip.png',
                     'address_latitude' => -7.0515187389640355,
                     'address_longitude' =>  110.4408874135232,
@@ -70,8 +70,8 @@ class CampusSeeder extends Seeder
 
                 [
                     'name' => 'Universitas Negeri Semarang',
-                    'description' => 'Kec. Sekaran, Kota Semarang',
-                    'date' => '1999-09-09',
+                    'description' => 'Kec. Gunungpati, Kota Semarang',
+                    'date_of_establishment' => '1999-09-09',
                     'logo_path' => '/logo/logo_unnes.png',
                     'address_latitude' => -7.050459040075577,
                     'address_longitude' => 110.3924514329852,
@@ -92,7 +92,7 @@ class CampusSeeder extends Seeder
                 [
                     'name' => 'Universitas Dian Nuswantoro',
                     'description' => 'Kec. Semarang Tengah, Kota Semarang',
-                    'date' => '2001-07-07',
+                    'date_of_establishment' => '2001-07-07',
                     'logo_path' => '/logo/logo_udinus.png',
                     'address_latitude' => -6.981614114225112,
                     'address_longitude' => 110.40927468580766,
@@ -113,7 +113,7 @@ class CampusSeeder extends Seeder
                 [
                     'name' => 'Politeknik Kementrian Kesehatan Semarang',
                     'description' => 'Kec. Banyumanik, Kota Semarang',
-                    'date' => '1995-06-06',
+                    'date_of_establishment' => '1995-06-06',
                     'logo_path' => '/logo/logo_polkesmar.png',
                     'address_latitude' => -7.054530372005238,
                     'address_longitude' =>  110.42843222351858,

@@ -4,15 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\CampusType;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
 class CampusTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+    /**
+     * @OA\Get(
+     *     path="/api/campus_types",
+     *     tags={"Campus Types"},
+     *     summary="Get list of campus types",
+     *     @OA\Response(response=200, description="List of campus types"),
+     * )
+     */
+
     public function index()
     {
-        //
+        return CampusType::select('id', 'name')->get();
     }
 
     /**
