@@ -21,7 +21,6 @@ return new class extends Migration
             $table->float('address_longitude');
             $table->string('web_address');
             $table->string('phone_number');
-            $table->integer('rank_score');
             $table->integer('number_of_graduates');
             $table->integer('number_of_registrants');
 
