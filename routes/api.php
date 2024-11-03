@@ -10,10 +10,12 @@ use App\Http\Controllers\AccreditationController;
 use App\Http\Controllers\CampusTypeController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\Auth\AuthController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/email/resend', [AuthController::class, 'resendVerificationEmail']);
 
 Route::get('/news', [NewsController::class, 'index']);
 Route::get('/news/{news}', [NewsController::class, 'show']);
