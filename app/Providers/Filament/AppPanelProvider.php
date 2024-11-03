@@ -30,7 +30,7 @@ class AppPanelProvider extends PanelProvider
             ->login()
             ->font('Poppins')
             ->brandName('UnivGo')
-            ->spa()
+            // ->spa()
             ->colors([
                 'danger' => Color::Rose,
                 'gray' => Color::Slate,
