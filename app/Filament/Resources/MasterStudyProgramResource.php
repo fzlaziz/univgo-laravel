@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\MasterFacultyResource\Pages;
-use App\Filament\Resources\MasterFacultyResource\RelationManagers;
-use App\Models\MasterFaculty;
+use App\Filament\Resources\MasterStudyProgramResource\Pages;
+use App\Filament\Resources\MasterStudyProgramResource\RelationManagers;
+use App\Models\MasterStudyProgram;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,11 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class MasterFacultyResource extends Resource
+class MasterStudyProgramResource extends Resource
 {
-    protected static ?string $model = MasterFaculty::class;
+    protected static ?string $model = MasterStudyProgram::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     protected static ?string $navigationGroup = "Master Data";
 
@@ -87,10 +87,10 @@ class MasterFacultyResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListMasterFaculties::route('/'),
-            'create' => Pages\CreateMasterFaculty::route('/create'),
-            'view' => Pages\ViewMasterFaculty::route('/{record}'),
-            'edit' => Pages\EditMasterFaculty::route('/{record}/edit'),
+            'index' => Pages\ListMasterStudyPrograms::route('/'),
+            'create' => Pages\CreateMasterStudyProgram::route('/create'),
+            'view' => Pages\ViewMasterStudyProgram::route('/{record}'),
+            'edit' => Pages\EditMasterStudyProgram::route('/{record}/edit'),
         ];
     }
 
