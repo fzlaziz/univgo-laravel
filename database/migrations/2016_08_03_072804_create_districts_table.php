@@ -20,7 +20,7 @@ class CreateDistrictsTable extends Migration
             $table->string('name', 255);
             $table->text('meta')->nullable();
             $table->timestamps();
-
+            $table->softDeletes();
             $table->foreign('city_code')
                 ->references('code')
                 ->on(config('laravolt.indonesia.table_prefix').'cities')

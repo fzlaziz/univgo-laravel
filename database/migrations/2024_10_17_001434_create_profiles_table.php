@@ -25,6 +25,8 @@ return new class extends Migration
             $table->foreign('campus_id')->references('id')->on('campuses');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('village_id')->references('id')->on('indonesia_villages');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MasterFaculty extends Model
 {
     /** @use HasFactory<\Database\Factories\MasterFacultyFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public function faculties(): HasMany
     {

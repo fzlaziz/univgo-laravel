@@ -36,6 +36,8 @@ return new class extends Migration
             $table->foreign('district_id')->references('id')->on('indonesia_districts');
             $table->foreign('campus_type_id')->references('id')->on('campus_types');
 
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

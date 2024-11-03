@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Campus;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Faculty extends Model
 {
     /** @use HasFactory<\Database\Factories\FacultyFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public function study_programs(): HasMany
     {

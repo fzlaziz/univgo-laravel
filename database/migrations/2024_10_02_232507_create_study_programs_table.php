@@ -31,6 +31,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('master_study_program_id');
             $table->foreign('master_study_program_id')->references('id')->on('master_study_programs');
+            $table->softDeletes();
 
             $table->timestamps();
         });

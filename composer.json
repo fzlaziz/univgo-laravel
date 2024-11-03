@@ -7,11 +7,12 @@
     "require": {
         "php": "^8.2",
         "darkaonline/l5-swagger": "^8.6",
+        "fakerphp/faker": "^1.23",
+        "filament/filament": "^3.2",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "laravolt/indonesia": "^0.35.0",
-        "fakerphp/faker": "^1.23"
+        "laravolt/indonesia": "^0.35.0"
     },
     "require-dev": {
         "laravel/pint": "^1.13",
@@ -35,7 +36,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('file_location')->nullable();
 
             $table->unsignedBigInteger('campus_id');
- 
+
             $table->foreign('campus_id')->references('id')->on('campuses');
+            $table->softDeletes();
 
             $table->timestamps();
         });

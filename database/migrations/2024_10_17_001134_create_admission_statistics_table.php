@@ -16,8 +16,11 @@ return new class extends Migration
             $table->year('year');
             $table->integer('number_of_accepted_students');
             $table->unsignedBigInteger('campus_id');
- 
+
             $table->foreign('campus_id')->references('id')->on('campuses');
+
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Accreditation;
 use App\Models\Campus;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class StudyProgram extends Model
 {
     /** @use HasFactory<\Database\Factories\StudyProgramFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public function faculty(): BelongsTo
     {

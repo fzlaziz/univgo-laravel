@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('education_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            
+            $table->softDeletes();
             $table->timestamps();
         });
     }

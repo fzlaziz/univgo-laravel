@@ -20,6 +20,7 @@ class CreateCitiesTable extends Migration
             $table->string('name', 255);
             $table->text('meta')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('province_code')
                 ->references('code')

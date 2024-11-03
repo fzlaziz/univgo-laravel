@@ -20,6 +20,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('admission_route_id');
             $table->foreign('admission_route_id')->references('id')->on('admission_routes');
+            $table->softDeletes();
 
             $table->timestamps();
         });
