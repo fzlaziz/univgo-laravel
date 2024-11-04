@@ -36,6 +36,11 @@ class AuthController extends Controller
                 'password' => 'required|string|min:8|confirmed',
             ]);
 
+            $deletedUser = User::withTrashed()->where('email', $validatedData['email'])->first();
+            if ($deletedUser) {
+                $deletedUser->forceDelete();
+            }
+
             $user = User::create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
