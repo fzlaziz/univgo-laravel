@@ -47,9 +47,10 @@ class CampusResource extends Resource
                         '4:3',
                         '1:1',
                     ]),
-                Forms\Components\TextInput::make('date_of_establishment')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\DatePicker::make('date_of_establishment')
+                    ->native(false)
+                    ->displayFormat('d F Y')
+                    ->required(),
                 Forms\Components\TextInput::make('address_latitude')
                     ->required(),
                 Forms\Components\TextInput::make('address_longitude')
