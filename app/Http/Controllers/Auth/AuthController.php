@@ -111,7 +111,7 @@ class AuthController extends Controller
             now()->addMinutes(60),
             ['id' => $user->getKey(), 'hash' => sha1($user->getEmailForVerification())]
         );
-        
+
     }
 
     public function login(Request $request)
