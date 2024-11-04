@@ -36,7 +36,7 @@ class CampusResource extends Resource
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('logo_path')
                     ->label('Upload Logo')
-                    ->disk('public')
+                    ->disk(env('FILESYSTEM_DISK', 'public'))
                     ->directory('campus-logo')
                     ->default(null)
                     ->visibility('public')

@@ -12,7 +12,8 @@
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "laravolt/indonesia": "^0.35.0"
+        "laravolt/indonesia": "^0.35.0",
+        "league/flysystem-aws-s3-v3": "^3.0"
     },
     "require-dev": {
         "laravel/pint": "^1.13",
