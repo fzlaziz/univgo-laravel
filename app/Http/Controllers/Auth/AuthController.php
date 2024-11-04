@@ -25,13 +25,13 @@ class AuthController extends Controller
                     'string',
                     'email',
                     'max:255',
-                    Rule::unique('users', 'email'),
+                    Rule::unique('users', 'email')->whereNull('deleted_at'),
                 ],
                 'name' => [
                     'required',
                     'string',
                     'max:255',
-                    Rule::unique('users', 'name'),
+                    Rule::unique('users', 'name')->whereNull('deleted_at'),
                 ],
                 'password' => 'required|string|min:8|confirmed',
             ]);
