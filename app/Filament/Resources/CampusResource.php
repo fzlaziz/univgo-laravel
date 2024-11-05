@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CampusResource\Pages;
 use App\Filament\Resources\CampusResource\RelationManagers;
+use App\Filament\Resources\CampusResource\RelationManagers\CampusRankingsRelationManager;
 use App\Models\Accreditation;
 use App\Models\Campus;
 use App\Models\CampusType;
@@ -221,7 +222,7 @@ class CampusResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CampusRankingsRelationManager::class,
         ];
     }
 
