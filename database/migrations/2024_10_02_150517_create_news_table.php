@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->text('excerpt');
             $table->longText('content');
-            $table->string('file_location')->nullable();
+            $table->string('attachment')->nullable();
 
             $table->unsignedBigInteger('campus_id');
 

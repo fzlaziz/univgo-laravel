@@ -100,6 +100,7 @@ class CampusResource extends Resource
                         ->schema([
                             Forms\Components\FileUpload::make('logo_path')
                             ->label('Upload Logo')
+                            ->image()
                             ->disk(env('FILESYSTEM_DISK', 'public'))
                             ->directory('campus-logo')
                             ->default(null)
@@ -107,7 +108,7 @@ class CampusResource extends Resource
                             ->image()
                             ->imageEditor()
                             ->imageEditorAspectRatios([
-                                '4:3',
+                                '3:4',
                                 '1:1',
                             ]),
                         ]),
