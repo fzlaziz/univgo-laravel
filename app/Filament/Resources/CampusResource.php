@@ -7,8 +7,11 @@ use App\Filament\Resources\CampusResource\RelationManagers;
 use App\Models\Accreditation;
 use App\Models\Campus;
 use App\Models\CampusType;
+use App\Models\DegreeLevel;
 use App\Models\District;
 use Filament\Forms;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -28,73 +31,105 @@ class CampusResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('logo_path')
-                    ->label('Upload Logo')
-                    ->disk(env('FILESYSTEM_DISK', 'public'))
-                    ->directory('campus-logo')
-                    ->default(null)
-                    ->visibility('public')
-                    ->image()
-                    ->imageEditor()
-                    // ->columnSpanFull()
-                    ->imageEditorAspectRatios([
-                        '4:3',
-                        '1:1',
-                    ]),
-                Forms\Components\DatePicker::make('date_of_establishment')
-                    ->native(false)
-                    ->displayFormat('d F Y')
-                    ->required(),
-                Forms\Components\TextInput::make('address_latitude')
-                    ->required(),
-                Forms\Components\TextInput::make('address_longitude')
-                    ->required(),
-                Forms\Components\TextInput::make('web_address')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone_number')
-                    ->tel()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('number_of_graduates')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('number_of_registrants')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('min_single_tuition')
-                    ->numeric()
-                    ->default(null),
-                Forms\Components\TextInput::make('max_single_tuition')
-                    ->numeric()
-                    ->default(null),
-                Forms\Components\Select::make('accreditation_id')
-                    ->label('Accreditation')
-                    ->options(Accreditation::all()->pluck('name', 'id'))
-                    ->searchable()
-                    ->default(null)
-                    ->native(false)
-                    ->required(),
-                Forms\Components\Select::make('district_id')
-                    ->label('Kecamatan')
-                    ->options(District::all()->pluck('name', 'id'))
-                    ->searchable()
-                    ->default(null)
-                    ->required()
-                    ->native(false),
-                Forms\Components\Select::make('campus_type_id')
-                    ->label('Tipe Kampus')
-                    ->options(CampusType::all()->pluck('name', 'id'))
-                    ->searchable()
-                    ->required()
-                    ->native(false)
-                    ->default(null),
+                Section::make(function ($record) {
+                    return $record ? 'Edit Campus' : 'Create Campus';
+                })
+                ->description(function ($record) {
+                    return $record ? 'Please update the form below to edit the campus.' : 'Please fill in the form below to create a new campus.';
+                })
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('description')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\DatePicker::make('date_of_establishment')
+                            ->native(false)
+                            ->displayFormat('d F Y')
+                            ->required(),
+                        Forms\Components\TextInput::make('address_latitude')
+                            ->required(),
+                        Forms\Components\TextInput::make('address_longitude')
+                            ->required(),
+                        Forms\Components\TextInput::make('web_address')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('phone_number')
+                            ->tel()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('number_of_graduates')
+                            ->required()
+                            ->numeric(),
+                        Forms\Components\TextInput::make('number_of_registrants')
+                            ->required()
+                            ->numeric(),
+                        Forms\Components\TextInput::make('min_single_tuition')
+                            ->numeric()
+                            ->default(null),
+                        Forms\Components\TextInput::make('max_single_tuition')
+                            ->numeric()
+                            ->default(null),
+                        Forms\Components\Select::make('accreditation_id')
+                            ->label('Accreditation')
+                            ->options(Accreditation::all()->pluck('name', 'id'))
+                            ->searchable()
+                            ->default(null)
+                            ->native(false)
+                            ->required(),
+                        Forms\Components\Select::make('district_id')
+                            ->label('Kecamatan')
+                            ->options(District::all()->pluck('name', 'id'))
+                            ->searchable()
+                            ->default(null)
+                            ->required()
+                            ->native(false),
+                        Forms\Components\Select::make('campus_type_id')
+                            ->label('Tipe Kampus')
+                            ->options(CampusType::all()->pluck('name', 'id'))
+                            ->searchable()
+                            ->required()
+                            ->native(false)
+                            ->default(null),
+                    ])->columnSpan(2)->columns(2),
+                Group::make()->schema([
+                    Section::make('Logo')
+                        ->description('Please upload logo for the campus.')
+                        ->schema([
+                            Forms\Components\FileUpload::make('logo_path')
+                            ->label('Upload Logo')
+                            ->disk(env('FILESYSTEM_DISK', 'public'))
+                            ->directory('campus-logo')
+                            ->default(null)
+                            ->visibility('public')
+                            ->image()
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '4:3',
+                                '1:1',
+                            ]),
+                        ]),
+                    Section::make('Degree Levels')
+                        ->description('Please select the degree levels that are available in the campus.')
+                        ->schema([
+                        Forms\Components\Select::make('degree_levels')
+                        ->relationship('degree_levels', 'name')
+                        ->options(DegreeLevel::all()->pluck('name', 'id'))
+                        ->multiple()
+                        ]),
+                ])->columnSpan([
+                    'default' => 2,
+                    'sm' => 2,
+                    'md' => 2,
+                    'lg' => 1,
+                ]),
+
+            ])->columns([
+                'default' => 2,
+                'sm' => 2,
+                'md' => 2,
+                'lg' => 3,
             ]);
     }
 
