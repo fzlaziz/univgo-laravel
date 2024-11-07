@@ -78,7 +78,19 @@ class CampusController extends Controller
      */
     public function show(Campus $campus)
     {
-        //
+        $news = $campus->news()->latest()->limit(5)->get();
+        $facilities = $campus->facilities()->get();
+        $galleries = $campus->galleries()->get();
+        $admission_statistics = $campus->admission_statistics()->get();
+        $campusData = $campus->load(['degree_levels'])->toArray();
+        $campusData['campus_type'] = $campus->campus_type->name;
+        $campusData['accreditation'] = $campus->accreditation->name;
+        $campusData['news'] = $news;
+        $campusData['galleries'] = $galleries;
+        $campusData['facilities'] = $facilities;
+        $campusData['admission_statistitcs'] = $admission_statistics;
+
+        return $campusData;
     }
 
     /**

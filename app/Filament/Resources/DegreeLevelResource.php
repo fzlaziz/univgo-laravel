@@ -28,6 +28,9 @@ class DegreeLevelResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('duration')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -37,6 +40,8 @@ class DegreeLevelResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('duration')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

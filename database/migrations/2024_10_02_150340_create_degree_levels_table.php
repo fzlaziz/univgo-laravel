@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('degree_levels', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('duration');
             $table->timestamps();
             $table->softDeletes();
 
