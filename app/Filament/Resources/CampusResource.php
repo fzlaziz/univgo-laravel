@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CampusResource\Pages;
 use App\Filament\Resources\CampusResource\RelationManagers;
 use App\Filament\Resources\CampusResource\RelationManagers\CampusRankingsRelationManager;
+use App\Filament\Resources\CampusResource\RelationManagers\FacilitiesRelationManager;
 use App\Models\Accreditation;
 use App\Models\Campus;
 use App\Models\CampusType;
@@ -224,6 +225,7 @@ class CampusResource extends Resource
     {
         return [
             CampusRankingsRelationManager::class,
+            FacilitiesRelationManager::class,
         ];
     }
 
