@@ -83,7 +83,7 @@ class CampusResource extends Resource
                             ->required(),
                         Forms\Components\Select::make('district_id')
                             ->label('Kecamatan')
-                            ->options(District::all()->pluck('name', 'id'))
+                            ->relationship('district','name')
                             ->searchable()
                             ->default(null)
                             ->required()
