@@ -22,7 +22,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return News::with('campus')->get();
+        return News::select('id','title','created_at')->get();
     }
 
     /**
