@@ -11,7 +11,7 @@ class NewsCommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(News $news, Exception $e)
+    public function index(News $news)
     {
         if(!$news) {
             return response()->json([
