@@ -11,6 +11,7 @@ use App\Http\Controllers\CampusTypeController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\NewsCommentController;
 
 Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 Route::post('/register', [AuthController::class, 'register']);
@@ -19,6 +20,12 @@ Route::post('/email/resend', [AuthController::class, 'resendVerificationEmail'])
 
 Route::get('/news', [NewsController::class, 'index']);
 Route::get('/news/{news}', [NewsController::class, 'show']);
+Route::get('/news/{news}/comments', [NewsCommentController::class, 'index']);
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('/news/{news}/comments', [NewsCommentController::class, 'store']);
+});
+
 Route::get('/province', [ProvinceController::class, 'index']);
 Route::get('/districts', [DistrictController::class, 'index']);
 Route::get('/degree_levels', [DegreeLevelController::class, 'index']);
