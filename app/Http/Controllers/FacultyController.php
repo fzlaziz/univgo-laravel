@@ -53,10 +53,10 @@ class FacultyController extends Controller
     public function study_programs(Faculty $faculty)
     {
         // Load study programs related to the faculty
-        $study_programs = $faculty->study_programs()->get();
+        $study_programs = $faculty->study_programs()->with(['degree_level', 'accreditation'])->get();
 
         return response()->json([
-            'faculty' => $faculty,
+            'faculty' => $faculty->load('campus'),
             'study_programs' => $study_programs,
         ]);
     }
