@@ -34,5 +34,6 @@ Route::get('/accreditations', [AccreditationController::class, 'index']);
 Route::get('/campus_types', [CampusTypeController::class, 'index']);
 Route::get('/campuses', [CampusController::class, 'index']);
 Route::get('/campus/{campus:id}', [CampusController::class, 'show']);
+Route::get('/campus/{campus:id}/faculties', [CampusController::class, 'faculties']);
 Route::get('/faculties/{faculty:id}/study_programs', [FacultyController::class, 'study_programs']);
 Route::get('/study_programs', [StudyProgramController::class, 'index']);

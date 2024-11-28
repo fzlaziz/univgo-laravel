@@ -110,4 +110,10 @@ class CampusController extends Controller
     {
         //
     }
+
+    public function faculties(Campus $campus)
+    {
+        $faculties = $campus->faculties()->get();
+        return response()->json($faculties);
+    }
 }
