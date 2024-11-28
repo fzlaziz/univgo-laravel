@@ -83,6 +83,8 @@ class CampusController extends Controller
         $galleries = $campus->galleries()->get();
         $admission_statistics = $campus->admission_statistics()->get();
         $campusData = $campus->load(['degree_levels'])->toArray();
+        $campusData = $campus->load(['admission_routes'])->toArray();
+        $campusData = $campus->load(['faculties'])->toArray();
         $campusData['campus_type'] = $campus->campus_type->name;
         $campusData['accreditation'] = $campus->accreditation->name;
         $campusData['news'] = $news;

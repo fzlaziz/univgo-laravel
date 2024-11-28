@@ -46,4 +46,18 @@ class FacultyController extends Controller
     {
         //
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function study_programs(Faculty $faculty)
+    {
+        // Load study programs related to the faculty
+        $study_programs = $faculty->study_programs()->get();
+
+        return response()->json([
+            'faculty' => $faculty,
+            'study_programs' => $study_programs,
+        ]);
+    }
 }

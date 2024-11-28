@@ -12,6 +12,7 @@ use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\NewsCommentController;
+use App\Http\Controllers\FacultyController;
 
 Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 Route::post('/register', [AuthController::class, 'register']);
@@ -33,4 +34,5 @@ Route::get('/accreditations', [AccreditationController::class, 'index']);
 Route::get('/campus_types', [CampusTypeController::class, 'index']);
 Route::get('/campuses', [CampusController::class, 'index']);
 Route::get('/campus/{campus:id}', [CampusController::class, 'show']);
+Route::get('/faculties/{faculty:id}/study_programs', [FacultyController::class, 'study_programs']);
 Route::get('/study_programs', [StudyProgramController::class, 'index']);
