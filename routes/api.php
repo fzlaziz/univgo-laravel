@@ -9,6 +9,7 @@ use App\Http\Controllers\DegreeLevelController;
 use App\Http\Controllers\AccreditationController;
 use App\Http\Controllers\CampusTypeController;
 use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\NewsCommentController;
@@ -28,6 +29,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 Route::get('/province', [ProvinceController::class, 'index']);
+Route::get('/cities', [CityController::class, 'index']);
 Route::get('/districts', [DistrictController::class, 'index']);
 Route::get('/degree_levels', [DegreeLevelController::class, 'index']);
 Route::get('/accreditations', [AccreditationController::class, 'index']);
