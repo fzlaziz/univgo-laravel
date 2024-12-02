@@ -78,5 +78,12 @@ class Campus extends Model
     {
         return $this->belongsTo(CampusType::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(CampusReview::class);
+    }
+    
+
 }
 

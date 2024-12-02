@@ -116,4 +116,32 @@ class CampusController extends Controller
         $faculties = $campus->faculties()->get();
         return response()->json($faculties);
     }
+
+    public function reviews($campusId)
+    {
+        $campus = Campus::with('reviews.user')->findOrFail($campusId);
+
+        $totalReviews = $campus->reviews->count();
+        $averageRating = $campus->reviews->avg('rating');
+
+        $reviews = $campus->reviews->map(function ($review) {
+            return [
+                'id' => $review->id,
+                'user' => $review->user->name,
+                'rating' => $review->rating,
+                'review' => $review->review,
+                'created_at' => $review->created_at->toIso8601String(),
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'total_reviews' => $totalReviews,
+                'average_rating' => round($averageRating, 1),
+                'reviews' => $reviews,
+            ],
+        ]);
+    }
+
 }
