@@ -58,6 +58,15 @@ class CampusResource extends Resource
                         Forms\Components\TextInput::make('web_address')
                             ->required()
                             ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('youtube')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('instagram')
+                            ->required()
+                            ->maxLength(255),
                         Forms\Components\TextInput::make('phone_number')
                             ->tel()
                             ->required()
