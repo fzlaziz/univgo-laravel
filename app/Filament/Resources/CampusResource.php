@@ -126,10 +126,16 @@ class CampusResource extends Resource
                     Section::make('Degree Levels')
                         ->description('Please select the degree levels that are available in the campus.')
                         ->schema([
-                        Forms\Components\Select::make('degree_levels')
-                        ->relationship('degree_levels', 'name')
-                        ->options(DegreeLevel::all()->pluck('name', 'id'))
-                        ->multiple()
+                            Forms\Components\Select::make('degree_levels')
+                            ->relationship('degree_levels', 'name')
+                            ->options(DegreeLevel::all()->pluck('name', 'id'))
+                            ->multiple()
+                        ]),
+                    Section::make('Admission Routes')
+                        ->description('Please select the admission routes that are available in the campus.')
+                        ->schema([
+                            Forms\Components\CheckboxList::make('admission_routes')
+                            ->relationship(titleAttribute: 'name')
                         ]),
                 ])->columnSpan([
                     'default' => 2,
