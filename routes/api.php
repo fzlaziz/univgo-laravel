@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/campus_reviews/{id}/edit', [CampusReviewController::class, 'update']);
 });
 
+Route::get('/campuses/top-10', [CampusController::class, 'top_ten']);
 Route::get('/province', [ProvinceController::class, 'index']);
 Route::get('/cities', [CityController::class, 'index']);
 Route::get('/districts', [DistrictController::class, 'index']);

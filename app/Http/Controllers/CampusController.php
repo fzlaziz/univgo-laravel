@@ -144,4 +144,50 @@ class CampusController extends Controller
         ]);
     }
 
+    public function top_ten()
+    {
+        $campusTypes = [
+            1 => 'PTN',
+            2 => 'Politeknik',
+            3 => 'Swasta',
+        ];
+
+        $topCampuses = collect($campusTypes)->mapWithKeys(function ($typeName, $typeId) {
+            $campuses = Campus::with(['accreditation', 'district.city.province', 'campus_rankings', 'campus_type'])
+                ->where('campus_type_id', $typeId)
+                ->withCount('campus_rankings')
+                ->orderByRaw('LEAST(COALESCE((SELECT MIN(rank) FROM campus_rankings WHERE campus_id = campuses.id), 9999), 9999)')
+                ->take(10)
+                ->get()
+                ->map(function ($campus) {
+                    $bestRanking = $campus->campus_rankings->min('rank');
+                    $rankScore = $bestRanking !== null ? $bestRanking : null;
+                    return [
+                        'id' => $campus->id,
+                        'name' => $campus->name,
+                        'logo_path' => $campus->logo_path,
+                        'address_latitude' => (float) $campus->address_latitude,
+                        'address_longitude' => (float) $campus->address_longitude,
+                        'rank_score' => $rankScore,
+                        'accreditation_id' => $campus->accreditation_id,
+                        'district' => ucwords(strtolower($campus->district->name)),
+                        'district_id' => $campus->district->id,
+                        'city' => ucwords(strtolower($campus->district->city->name)),
+                        'city_id' => $campus->district->city->id,
+                        'province' => ucwords(strtolower($campus->district->city->province->name)),
+                        'province_id' => $campus->district->city->province->id,
+                        'campus_type_id' => $campus->campus_type->id,
+                        'campus_type' => $campus->campus_type->name,
+                        'accreditation' => [
+                            'id' => $campus->accreditation->id,
+                            'name' => $campus->accreditation->name,
+                        ],
+                    ];
+                });
+
+            return [$typeName => $campuses];
+        });
+
+        return response()->json($topCampuses);
+    }
 }
