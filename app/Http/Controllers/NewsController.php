@@ -25,6 +25,13 @@ class NewsController extends Controller
         return News::select('id','title','excerpt','attachment','created_at')->get();
     }
 
+
+    public function latest()
+    {
+        $latestNews = News::select('id','title','excerpt','attachment','created_at')->orderBy('created_at', 'desc')->take(4)->get();
+        return response()->json($latestNews);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

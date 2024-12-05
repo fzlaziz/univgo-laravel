@@ -22,6 +22,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/email/resend', [AuthController::class, 'resendVerificationEmail']);
 
 Route::get('/news', [NewsController::class, 'index']);
+Route::get('/news/latest', [NewsController::class, 'latest']);
 Route::get('/news/{news}', [NewsController::class, 'show']);
 Route::get('/news/{news}/comments', [NewsCommentController::class, 'index']);
 
