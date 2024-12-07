@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FacultyResource\Pages;
 use App\Filament\Resources\FacultyResource\RelationManagers;
+use App\Filament\Resources\FacultyResource\RelationManagers\StudyProgramsRelationManager;
 use App\Models\Campus;
 use App\Models\Faculty;
 use App\Models\MasterFaculty;
@@ -102,7 +103,7 @@ class FacultyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            StudyProgramsRelationManager::class,
         ];
     }
 

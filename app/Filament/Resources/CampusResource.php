@@ -6,6 +6,7 @@ use App\Filament\Resources\CampusResource\Pages;
 use App\Filament\Resources\CampusResource\RelationManagers;
 use App\Filament\Resources\CampusResource\RelationManagers\CampusRankingsRelationManager;
 use App\Filament\Resources\CampusResource\RelationManagers\FacilitiesRelationManager;
+use App\Filament\Resources\CampusResource\RelationManagers\FacultiesRelationManager;
 use App\Filament\Resources\CampusResource\RelationManagers\GalleriesRelationManager;
 use App\Models\Accreditation;
 use App\Models\Campus;
@@ -240,6 +241,7 @@ class CampusResource extends Resource
     public static function getRelations(): array
     {
         return [
+            FacultiesRelationManager::class,
             CampusRankingsRelationManager::class,
             FacilitiesRelationManager::class,
             GalleriesRelationManager::class,
