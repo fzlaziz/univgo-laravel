@@ -22,10 +22,13 @@ class CampusController extends Controller
 
     public function index()
     {
-        return Campus::with(['accreditation','district.city.province','campus_rankings','campus_type','degree_levels'])
+        return Campus::with(['accreditation','district.city.province','campus_rankings.campus_ranking','campus_type','degree_levels'])
         ->get()
         ->map(function ($campus) {
-            $bestRanking = $campus->campus_rankings->min('rank');
+            // Find the best ranking across all ranking sources
+            $bestRanking = $campus->campus_rankings->min(function ($campusCampusRanking) {
+                return $campusCampusRanking->rank;
+            });
             $rankScore = $bestRanking !== null ? $bestRanking : null;
             return [
                 'id' => $campus->id,
@@ -153,22 +156,25 @@ class CampusController extends Controller
         ];
 
         $topCampuses = collect($campusTypes)->mapWithKeys(function ($typeName, $typeId) {
-            $campuses = Campus::with(['accreditation', 'district.city.province', 'campus_rankings', 'campus_type'])
+            $campuses = Campus::with(['accreditation', 'district.city.province', 'campus_rankings.campus_ranking', 'campus_type'])
                 ->where('campus_type_id', $typeId)
                 ->withCount('campus_rankings')
-                ->orderByRaw('LEAST(COALESCE((SELECT MIN(rank) FROM campus_rankings WHERE campus_id = campuses.id), 9999), 9999)')
+                ->orderByRaw('LEAST(COALESCE((SELECT MIN(rank) FROM campus_campus_rankings WHERE campus_id = campuses.id), 9999), 9999)')
                 ->take(10)
                 ->get()
                 ->map(function ($campus) {
-                    $bestRanking = $campus->campus_rankings->min('rank');
-                    $rankScore = $bestRanking !== null ? $bestRanking : null;
+                    // Find the best ranking across all ranking sources
+                    $bestRanking = $campus->campus_rankings->min(function ($campusCampusRanking) {
+                        return $campusCampusRanking->rank;
+                    });
+
                     return [
                         'id' => $campus->id,
                         'name' => $campus->name,
                         'logo_path' => $campus->logo_path,
                         'address_latitude' => (float) $campus->address_latitude,
                         'address_longitude' => (float) $campus->address_longitude,
-                        'rank_score' => $rankScore,
+                        'rank_score' => $bestRanking !== null ? $bestRanking : null,
                         'accreditation_id' => $campus->accreditation_id,
                         'district' => ucwords(strtolower($campus->district->name)),
                         'district_id' => $campus->district->id,

@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('campus_rankings', function (Blueprint $table) {
+        Schema::create('campus_campus_ranking', function (Blueprint $table) {
             $table->id();
-            $table->string('source');
-            $table->integer('rank');
 
             $table->unsignedBigInteger('campus_id');
             $table->foreign('campus_id')->references('id')->on('campuses');
 
+            $table->unsignedBigInteger('campus_ranking_id');
+            $table->foreign('campus_ranking_id')->references('id')->on('campus_rankings');
+            $table->integer('rank');
             $table->softDeletes();
+
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('campus_rankings');
+        Schema::dropIfExists('campuses_campus_rankings');
     }
 };

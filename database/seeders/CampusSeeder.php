@@ -20,10 +20,7 @@ class CampusSeeder extends Seeder
 
         $unggul_id = DB::table('accreditations')->where('name', 'Unggul')->value('id');
         $baik_sekali_id = DB::table('accreditations')->where('name', 'Baik Sekali')->value('id');
-        $baik_id = DB::table('accreditations')->where('name', 'Baik')->value('id');
         $a_id = DB::table('accreditations')->where('name', 'A')->value('id');
-        $b_id = DB::table('accreditations')->where('name', 'B')->value('id');
-        $c_id = DB::table('accreditations')->where('name', 'C')->value('id');
 
         if ($accreditation) {
             DB::table('campuses')->insert([
@@ -36,6 +33,9 @@ class CampusSeeder extends Seeder
                     'address_longitude' => (float) 110.4355492767185,
                     'web_address' => 'https://www.polines.ac.id',
                     'phone_number' => '021-12345678',
+                    'email' => '-',
+                    'youtube' => '-',
+                    'instagram' => '-',
                     'number_of_graduates' => 1500,
                     'number_of_registrants' => 3000,
                     'min_single_tuition'=> 500000,
@@ -55,6 +55,9 @@ class CampusSeeder extends Seeder
                     'address_longitude' => (float) 110.4408874135232,
                     'web_address' => 'https://undip.id',
                     'phone_number' => '021-87654321',
+                    'email' => '-',
+                    'youtube' => '-',
+                    'instagram' => '-',
                     'number_of_graduates' => 800,
                     'number_of_registrants' => 1200,
                     'min_single_tuition'=> 500000,
@@ -75,6 +78,9 @@ class CampusSeeder extends Seeder
                     'address_longitude' => (float) 110.3924514329852,
                     'web_address' => 'https://unnes.ac.id',
                     'phone_number' => '024-8319000',
+                    'email' => '-',
+                    'youtube' => '-',
+                    'instagram' => '-',
                     'number_of_graduates' => 700,
                     'number_of_registrants' => 1100,
                     'min_single_tuition'=> 500000,
@@ -95,6 +101,9 @@ class CampusSeeder extends Seeder
                     'address_longitude' => (float) 110.40927468580766,
                     'web_address' => 'https://dinus.ac.id',
                     'phone_number' => '024-3517261',
+                    'email' => '-',
+                    'youtube' => '-',
+                    'instagram' => '-',
                     'number_of_graduates' => 650,
                     'number_of_registrants' => 1000,
                     'min_single_tuition'=> 4625000,
@@ -115,6 +124,9 @@ class CampusSeeder extends Seeder
                     'address_longitude' => (float) 110.42843222351858,
                     'web_address' => 'https://poltekkes-smg.ac.id',
                     'phone_number' => '024-74664321',
+                    'email' => '-',
+                    'youtube' => '-',
+                    'instagram' => '-',
                     'number_of_graduates' => 500,
                     'number_of_registrants' => 900,
                     'min_single_tuition'=> 5450000,

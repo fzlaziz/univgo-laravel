@@ -56,7 +56,7 @@ class Campus extends Model
 
     public function campus_rankings(): HasMany
     {
-        return $this->hasMany(CampusRanking::class);
+        return $this->hasMany(CampusCampusRanking::class);
     }
 
     public function degree_levels(): BelongsToMany
@@ -83,7 +83,7 @@ class Campus extends Model
     {
         return $this->hasMany(CampusReview::class);
     }
-    
+
 
 }
 

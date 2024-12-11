@@ -19,92 +19,104 @@ class CampusRankingSeeder extends Seeder
         $id_unnes = 3;
         $id_udinus = 4;
         $id_poltekkes = 5;
-
-        DB::table('campus_rankings')->insert([
-            [
-                'source' => 'Webometrics',
-                'rank' => 375,
-                'campus_id' => $id_undip,  // Undip
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'source' => 'Webometrics',
-                'rank' => 226,
-                'campus_id' => $id_polines,  // Polines
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'source' => 'Webometrics',
-                'rank' => 761,
-                'campus_id' => $id_unnes,  // Unnes
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'source' => 'Webometrics',
-                'rank' => 64,
-                'campus_id' => $id_udinus,  // Udinus
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'source' => 'Webometrics',
-                'rank' => 122,
-                'campus_id' => $id_poltekkes,  // Poltekkes
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // // Insert campus rankings
+        $webometricsId = DB::table('campus_rankings')->insertGetId([
+            'source' => 'Webometrics',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        DB::table('campus_rankings')->insert([
-            [
-                'source' => 'SIR',
-                'rank' => 3,
-                'campus_id' => $id_undip,  // Undip
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'source' => 'SIR',
-                'rank' => 14,
-                'campus_id' => $id_unnes,  // Unnes
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'source' => 'SIR',
-                'rank' => 56,
-                'campus_id' => $id_udinus,  // Udinus
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        $sirId = DB::table('campus_rankings')->insertGetId([
+            'source' => 'SIR',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        DB::table('campus_rankings')->insert([
-            [
-                'source' => '4icu',
-                'rank' => 4,
-                'campus_id' => $id_undip,  // Undip
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'source' => '4icu',
-                'rank' => 21,
-                'campus_id' => $id_unnes,  // Unnes
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'source' => '4icu',
-                'rank' => 70,
-                'campus_id' => $id_udinus,  // Udinus
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        $icuId = DB::table('campus_rankings')->insertGetId([
+            'source' => '4icu',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
+        // Insert into campus_campus_ranking
+        DB::table('campus_campus_ranking')->insert([
+            [
+            'campus_ranking_id' => $webometricsId,
+            'campus_id' => $id_undip,
+            'rank' => 375,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'campus_ranking_id' => $webometricsId,
+            'campus_id' => $id_polines,
+            'rank' => 226,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'campus_ranking_id' => $webometricsId,
+            'campus_id' => $id_unnes,
+            'rank' => 761,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'campus_ranking_id' => $webometricsId,
+            'campus_id' => $id_udinus,
+            'rank' => 64,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'campus_ranking_id' => $webometricsId,
+            'campus_id' => $id_poltekkes,
+            'rank' => 122,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'campus_ranking_id' => $sirId,
+            'campus_id' => $id_undip,
+            'rank' => 3,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'campus_ranking_id' => $sirId,
+            'campus_id' => $id_unnes,
+            'rank' => 14,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'campus_ranking_id' => $sirId,
+            'campus_id' => $id_udinus,
+            'rank' => 56,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'campus_ranking_id' => $icuId,
+            'campus_id' => $id_undip,
+            'rank' => 4,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'campus_ranking_id' => $icuId,
+            'campus_id' => $id_unnes,
+            'rank' => 21,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'campus_ranking_id' => $icuId,
+            'campus_id' => $id_udinus,
+            'rank' => 70,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+        ]);
     }
 }
