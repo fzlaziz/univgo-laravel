@@ -18,21 +18,22 @@ class CampusRankingsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('source')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('campus_ranking_id')
+                    ->relationship('campus_ranking', 'source')
+                    ->native(false)
+                    ->required(),
                 Forms\Components\TextInput::make('rank')
                     ->required()
-                    ->numeric()
+                    ->numeric(),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('source')
+            ->recordTitleAttribute('rank')
             ->columns([
-                Tables\Columns\TextColumn::make('source'),
+                Tables\Columns\TextColumn::make('campus_ranking.source'),
                 Tables\Columns\TextColumn::make('rank'),
             ])
             ->filters([
