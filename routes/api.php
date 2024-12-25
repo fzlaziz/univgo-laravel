@@ -40,6 +40,7 @@ Route::get('/degree_levels', [DegreeLevelController::class, 'index']);
 Route::get('/accreditations', [AccreditationController::class, 'index']);
 Route::get('/campus_types', [CampusTypeController::class, 'index']);
 Route::get('/campuses', [CampusController::class, 'index']);
+Route::get('/campuses-nearest', [CampusController::class, 'index_nearest']);
 Route::get('/campus/{campus:id}', [CampusController::class, 'show']);
 Route::get('/campus/{campus:id}/reviews', [CampusController::class, 'reviews']);
 Route::get('/campus/{campus:id}/faculties', [CampusController::class, 'faculties']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Campus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CampusController extends Controller
 {
@@ -159,7 +160,7 @@ class CampusController extends Controller
             $campuses = Campus::with(['accreditation', 'district.city.province', 'campus_rankings.campus_ranking', 'campus_type'])
                 ->where('campus_type_id', $typeId)
                 ->withCount('campus_rankings')
-                ->orderByRaw('LEAST(COALESCE((SELECT MIN(rank) FROM campus_campus_rankings WHERE campus_id = campuses.id), 9999), 9999)')
+                ->orderByRaw('LEAST(COALESCE((SELECT MIN(rank) FROM campus_campus_ranking WHERE campus_id = campuses.id), 9999), 9999)')
                 ->take(10)
                 ->get()
                 ->map(function ($campus) {
@@ -195,5 +196,68 @@ class CampusController extends Controller
         });
 
         return response()->json($topCampuses);
+    }
+
+    public function index_nearest(Request $request)
+    {
+        $latitude = $request->input('latitude');
+        $longitude = $request->input('longitude');
+
+        $query = Campus::with(['accreditation','district.city.province','campus_rankings.campus_ranking','campus_type','degree_levels']);
+
+        if ($latitude && $longitude) {
+            $query->select('*',
+                DB::raw('(6371 * acos(cos(radians(' . $latitude . '))
+                    * cos(radians(address_latitude))
+                    * cos(radians(address_longitude) - radians(' . $longitude . '))
+                    + sin(radians(' . $latitude . '))
+                    * sin(radians(address_latitude)))) AS distance')
+            )
+            ->orderBy('distance')
+            ->limit(4);
+        }
+
+        return $query->get()->map(function ($campus) {
+            $bestRanking = $campus->campus_rankings->min(function ($campusCampusRanking) {
+                return $campusCampusRanking->rank;
+            });
+            $rankScore = $bestRanking !== null ? $bestRanking : null;
+            return [
+                'id' => $campus->id,
+                'name' => $campus->name,
+                'description' => $campus->description,
+                'date_of_establishment' => $campus->date_of_establishment,
+                'logo_path' => $campus->logo_path,
+                'address_latitude' => (float) $campus->address_latitude,
+                'address_longitude' => (float) $campus->address_longitude,
+                'web_address' => $campus->web_address,
+                'phone_number' => $campus->phone_number,
+                'rank_score' => $rankScore,
+                'number_of_graduates' => $campus->number_of_graduates,
+                'number_of_registrants' => $campus->number_of_registrants,
+                'min_single_tuition' => $campus->min_single_tuition,
+                'max_single_tuition' => $campus->max_single_tuition,
+                'accreditation_id' => $campus->accreditation_id,
+                'district' => ucwords(strtolower($campus->district->name)),
+                'district_id' => $campus->district->id,
+                'city' => ucwords(strtolower($campus->district->city->name)),
+                'city_id' => $campus->district->city->id,
+                'province' => ucwords(strtolower($campus->district->city->province->name)),
+                'province_id' => $campus->district->city->province->id,
+                'campus_type_id' => $campus->campus_type->id,
+                'campus_type' => $campus->campus_type->name,
+                'accreditation' => [
+                    'id' => $campus->accreditation->id,
+                    'name' => $campus->accreditation->name,
+                ],
+                'degree_levels' => $campus->degree_levels->map(function ($degreeLevel) {
+                    return [
+                        'id' => $degreeLevel->id,
+                        'name' => $degreeLevel->name,
+                    ];
+                }),
+                'distance' => $campus->distance ?? null,
+            ];
+        });
     }
 }
