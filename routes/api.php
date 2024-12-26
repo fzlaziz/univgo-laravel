@@ -21,6 +21,16 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/email/resend', [AuthController::class, 'resendVerificationEmail']);
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware('verified')->group(function () {
+        Route::post('/change-password', [AuthController::class, 'changePassword']);
+        Route::get('/profile', [AuthController::class, 'getProfile']);
+        Route::post('/profile', [AuthController::class, 'updateProfile']);
+        Route::post('/upload-profile-image', [AuthController::class, 'updateProfileImage']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+    });
+});
+
 Route::get('/news', [NewsController::class, 'index']);
 Route::get('/news/latest', [NewsController::class, 'latest']);
 Route::get('/news/{news}', [NewsController::class, 'show']);
