@@ -160,11 +160,10 @@ class CampusController extends Controller
             $campuses = Campus::with(['accreditation', 'district.city.province', 'campus_rankings.campus_ranking', 'campus_type'])
                 ->where('campus_type_id', $typeId)
                 ->withCount('campus_rankings')
-                ->orderByRaw('LEAST(COALESCE((SELECT MIN(rank) FROM campus_campus_ranking WHERE campus_id = campuses.id), 9999), 9999)')
+                ->orderByRaw($this->getOrderByRawQuery())
                 ->take(10)
                 ->get()
                 ->map(function ($campus) {
-                    // Find the best ranking across all ranking sources
                     $bestRanking = $campus->campus_rankings->min(function ($campusCampusRanking) {
                         return $campusCampusRanking->rank;
                     });
@@ -196,6 +195,15 @@ class CampusController extends Controller
         });
 
         return response()->json($topCampuses);
+    }
+
+    private function getOrderByRawQuery()
+    {
+        if (DB::connection()->getDriverName() === 'pgsql') {
+            return 'COALESCE((SELECT MIN(rank) FROM campus_campus_ranking WHERE campus_id = campuses.id), 9999)';
+        } else {
+            return 'LEAST(COALESCE((SELECT MIN(rank) FROM campus_campus_ranking WHERE campus_id = campuses.id), 9999), 9999)';
+        }
     }
 
     public function index_nearest(Request $request)
