@@ -200,7 +200,7 @@ class CampusController extends Controller
     private function getOrderByRawQuery()
     {
         if (DB::connection()->getDriverName() === 'pgsql') {
-            return 'COALESCE((SELECT MIN(rank) FROM campus_campus_ranking WHERE campus_id = campuses.id), 9999)';
+            return 'LEAST(COALESCE((SELECT MIN(rank) FROM campus_campus_ranking WHERE campus_id = campuses.id), 9999), 9999)';
         } else {
             return 'LEAST(COALESCE((SELECT MIN(rank) FROM campus_campus_ranking WHERE campus_id = campuses.id), 9999), 9999)';
         }
