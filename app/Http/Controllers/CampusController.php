@@ -167,14 +167,14 @@ class CampusController extends Controller
                     $bestRanking = $campus->campus_rankings->min(function ($campusCampusRanking) {
                         return $campusCampusRanking->rank;
                     });
-
+                    $bestRanking = $bestRanking !== null ? $bestRanking : 9999;
                     return [
                         'id' => $campus->id,
                         'name' => $campus->name,
                         'logo_path' => $campus->logo_path,
                         'address_latitude' => (float) $campus->address_latitude,
                         'address_longitude' => (float) $campus->address_longitude,
-                        'rank_score' => $bestRanking !== null ? $bestRanking : null,
+                        'rank_score' => $bestRanking,
                         'accreditation_id' => $campus->accreditation_id,
                         'district' => ucwords(strtolower($campus->district->name)),
                         'district_id' => $campus->district->id,
