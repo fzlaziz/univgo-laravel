@@ -30,7 +30,7 @@ class CampusController extends Controller
             $bestRanking = $campus->campus_rankings->min(function ($campusCampusRanking) {
                 return $campusCampusRanking->rank;
             });
-            $rankScore = $bestRanking !== null ? $bestRanking : null;
+            $rankScore = $bestRanking !== null ? $bestRanking : 9999;
             return [
                 'id' => $campus->id,
                 'name' => $campus->name,
@@ -229,7 +229,7 @@ class CampusController extends Controller
             $bestRanking = $campus->campus_rankings->min(function ($campusCampusRanking) {
                 return $campusCampusRanking->rank;
             });
-            $rankScore = $bestRanking !== null ? $bestRanking : null;
+            $rankScore = $bestRanking !== null ? $bestRanking : 9999;
             return [
                 'id' => $campus->id,
                 'name' => $campus->name,
