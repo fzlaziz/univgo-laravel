@@ -73,21 +73,20 @@ class AuthController extends Controller
             $user = User::findOrFail($id);
 
             if (!hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
-                return response()->json(['message' => 'Invalid verification link'], 400);
+                return view('auth.email_verification.invalid_link');
             }
 
             if ($user->hasVerifiedEmail()) {
-                return response()->json(['message' => 'Email already verified'], 200);
+                return view('auth.email_verification.success');
             }
 
             $user->markEmailAsVerified();
-
-            return response()->json(['message' => 'Email verified successfully'], 200);
+            return view('auth.email_verification.success');
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json(['message' => 'User not found'], 404);
+            return view('auth.email_verification.system_error');
         } catch (\Exception $e) {
-            return response()->json(['message' => 'System error occurred'], 500);
+            return view('auth.email_verification.system_error');
         }
     }
 
@@ -115,7 +114,7 @@ class AuthController extends Controller
     {
         return URL::temporarySignedRoute(
             'verification.verify',
-            now()->addMinutes(60),
+            now()->addMinutes(600),
             ['id' => $user->getKey(), 'hash' => sha1($user->getEmailForVerification())]
         );
 
