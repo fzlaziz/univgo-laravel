@@ -22,7 +22,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return News::select('id','title','excerpt','attachment','created_at')->get();
+        return News::select('id','title','excerpt','attachment','created_at')->orderBy('created_at', 'desc')->get();
     }
 
 
