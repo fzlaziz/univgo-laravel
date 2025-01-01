@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class MasterFacultySeeder extends Seeder
 {
@@ -13,101 +14,41 @@ class MasterFacultySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('master_faculties')->insert([
-            [
-                'name' => 'Fakultas Teknik',
-                'description' => 'Fakultas yang fokus pada bidang teknik dan rekayasa.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Fakultas Ilmu Komputer',
-                'description' => 'Fakultas yang mengajarkan ilmu komputer, informatika, dan sistem informasi.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Keperawatan',
-                'description' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Kebidanan',
-                'description' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Gizi',
-                'description' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Teknik Radiodiagnostik dan Radioterapi',
-                'description' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Kesehatan Gigi',
-                'description' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Path file CSV
+        $filePath = database_path('seeders/master_faculties.csv');
 
-            [
-                'name' => 'Analis Kesehatan',
-                'description' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Periksa apakah file CSV ada
+        if (!File::exists($filePath)) {
+            echo "File CSV tidak ditemukan: $filePath\n";
+            return;
+        }
 
-            
-            [
-                'name' => 'Rekam Medis dan Informasi Kesehatan',
-                'description' => '',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Baca file CSV dengan pemisah ;
+        $data = array_map(function ($line) {
+            return str_getcsv($line, ';');  // Menambahkan parameter pemisah ;
+        }, file($filePath));
 
+        // Ambil header dari baris pertama
+        $header = array_shift($data);
 
-            [
-                'name' => 'Teknik Mesin',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Konversi setiap baris ke array asosiatif
+        $faculties = array_map(function ($row) use ($header) {
+            return array_combine($header, $row);
+        }, $data);
 
-            [
-                'name' => 'Teknik Elektro',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Gunakan updateOrInsert untuk menghindari duplikasi
+        foreach ($faculties as $faculty) {
+            DB::table('master_faculties')->updateOrInsert(
+                ['id' => $faculty['id']],  // Kondisi pencarian
+                [
+                    'name' => $faculty['name'],
+                    'description' => $faculty['description'] ?? '',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
+        }
 
-            [
-                'name' => 'Akuntansi',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
-            [
-                'name' => 'Administrasi Bisnis',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
-            [
-                'name' => 'Teknik Sipil',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            
-        ]);
+        echo "Data berhasil diimpor dari file CSV.\n";
     }
 }

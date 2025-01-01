@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class FacultySeeder extends Seeder
 {
@@ -13,129 +14,43 @@ class FacultySeeder extends Seeder
      */
     public function run(): void
     {
-        $masterTeknik = DB::table('master_faculties')->where('name', 'Fakultas Teknik')->first();
-        $masterIlmuKomputer = DB::table('master_faculties')->where('name', 'Fakultas Ilmu Komputer')->first();
+        // Path file CSV
+        $filePath = database_path('seeders/faculties.csv');
 
-        DB::table('faculties')->insert([
-            [
-                'master_faculty_id' => $masterTeknik->id,
-                'campus_id' => 1,
-                'name' => 'Fakultas Teknik',
-                'description' => 'Fakultas yang mengajarkan tentang pembangunan infrastruktur dan konstruksi.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'master_faculty_id' => $masterIlmuKomputer->id,
-                'campus_id' => 2,
-                'name' => 'Fakultas Komputer',
-                'description' => 'Fakultas yang mempelajari integrasi teknologi informasi dan manajemen.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'master_faculty_id' => 3,
-                'campus_id' => 5,
-                'name' => 'Jurusan Keperawatan',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'master_faculty_id' => 4,
-                'campus_id' => 5,
-                'name' => 'Jurusan Kebidanan',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Periksa apakah file CSV ada
+        if (!File::exists($filePath)) {
+            echo "File CSV tidak ditemukan: $filePath\n";
+            return;
+        }
 
-            [
-                'master_faculty_id' => 5,
-                'campus_id' => 5,
-                'name' => 'Jurusan Gizi',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'master_faculty_id' => 6,
-                'campus_id' => 5,
-                'name' => 'Jurusan Teknik Radiodiagnostik dan Radioterapi',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'master_faculty_id' => 7,
-                'campus_id' => 5,
-                'name' => 'Jurusan Kesehatan Gigi',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'master_faculty_id' => 8,
-                'campus_id' => 5,
-                'name' => 'Jurusan Analis Kesehatan',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'master_faculty_id' => 9,
-                'campus_id' => 5,
-                'name' => 'Jurusan Rekam Medis dan Informasi Kesehatan',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Baca file CSV dengan pemisah ;
+        $data = array_map(function ($line) {
+            return str_getcsv($line, ';');  // Menambahkan parameter pemisah ;
+        }, file($filePath));
 
-            [
-                'master_faculty_id' => 10,
-                'campus_id' => 1,
-                'name' => 'Teknik Mesin',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Ambil header dari baris pertama
+        $header = array_shift($data);
 
-            [
-                'master_faculty_id' => 11,
-                'campus_id' => 1,
-                'name' => 'Teknik Elektro',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Konversi setiap baris ke array asosiatif
+        $faculties = array_map(function ($row) use ($header) {
+            return array_combine($header, $row);
+        }, $data);
 
-            [
-                'master_faculty_id' => 12,
-                'campus_id' => 1,
-                'name' => 'Akuntansi',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        // Gunakan updateOrInsert untuk menghindari duplikasi
+        foreach ($faculties as $faculty) {
+            DB::table('faculties')->updateOrInsert(
+                ['id' => $faculty['id']],  // Kondisi pencarian
+                [
+                    'master_faculty_id' => $faculty['master_faculty_id'],
+                    'campus_id' => $faculty['campus_id'],
+                    'name' => $faculty['name'],
+                    'description' => $faculty['description'] ?? '',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
+        }
 
-            [
-                'master_faculty_id' => 13,
-                'campus_id' => 1,
-                'name' => 'Administrasi Bisnis',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
-            [
-                'master_faculty_id' => 14,
-                'campus_id' => 1,
-                'name' => 'Teknik Sipil',
-                'description' => '.',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            
-        ]);
+        echo "Data berhasil diimpor dari file CSV.\n";
     }
 }

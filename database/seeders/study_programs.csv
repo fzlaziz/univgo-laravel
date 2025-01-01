@@ -1,0 +1,45 @@
+id;name;description;campus_id;accreditation_id;degree_level_id;faculty_id;master_study_program_id
+1;Keperawatan Semarang;(Unggul);5;1;3;3;3
+2;Keperawatan Semarang dan Profesi Ners;(B);5;1;4;3;3
+3;Kebidanan Semarang;(Unggul);5;1;3;4;3
+4;Kebidanan Semarang dan Profesi Bidan;(B);5;1;4;4;3
+5;Gizi Semarang;(Unggul);5;1;3;5;3
+6;Gizi dan Dietetika;(Unggul);5;1;4;5;3
+7;Profesi Dietisien;(B);5;1;4;5;3
+8;Radiologi Semarang;(Unggul);5;1;3;6;3
+9;Teknik Radiologi Pencitraan Semarang;(Unggul);5;1;4;6;3
+10;Kesehatan Gigi;(Unggul);5;1;3;7;3
+11;Terapi Gigi;(Unggul);5;1;4;7;3
+12;Teknologi Laboratorium Medis;(B);5;1;3;8;3
+13;Teknologi Laboratorium Medis;(Unggul);5;1;4;8;3
+14;Teknologi Bank Darah;(Unggul);5;1;3;8;3
+15;Rekam Medis dan Informasi Kesehatan;(Unggul);5;1;3;9;3
+16;Teknik Mesin;(D3);1;1;3;10;3
+17;Teknik Konversi Energi;(D3);1;1;3;10;3
+18;Teknik Mesin Produksi dan Perawatan;(D4);1;1;4;10;3
+19;Teknik Rekayasa Pembangkit Energi;(D4);1;1;4;10;3
+20;Teknik Listrik;(D3);1;1;3;11;3
+21;Teknik Informatika;(D3);1;1;3;11;3
+22;Teknik Elektronika;(D3);1;1;3;11;3
+23;Teknik Rekayasa Elektronika;(D4);1;1;4;11;3
+24;Teknik Telekomunikasi;(D4);1;1;4;11;3
+25;Teknik Telekomunikasi;(D3);1;1;3;11;3
+26;Teknik Rekayasa Instalasi Listrik;(D4);1;1;4;11;3
+27;Teknologi Rekayasa Komputer;(D4);1;1;4;11;3
+28;Teknik Telekomunikasi;(MST);1;1;5;11;3
+29;Akuntansi;(D3);1;1;3;12;3
+30;Keuangan dan Perbankan;(D3);1;1;3;12;3
+31;Analisis Keuangan;(D4);1;1;4;12;3
+32;Perbankan Syariah;(D4);1;1;4;12;3
+33;Akuntansi Manajerial;(D4);1;1;4;12;3
+34;Komputerisasi Akuntansi;(D4);1;1;4;12;3
+35;Administrasi Bisnis;(D3);1;1;3;13;3
+36;Manajemen Pemasaran;(D3);1;1;3;13;3
+37;Manajemen Bisnis Internasional;(D4);1;1;4;13;3
+38;Administrasi Bisnis Terapan;(D4);1;1;4;13;3
+39;Teknik Konstruksi Gedung;(D3);1;1;3;14;3
+40;Teknik Konstruksi Sipil;(D3);1;1;3;14;3
+41;Teknik Perbaikan dan Perawatan Gedung;(D4);1;1;4;14;3
+42;Teknik Perancangan Jalan dan Jembatan;(D4);1;1;4;14;3
+43;Teknik Perbaikan dan Perawatan Gedung;(D4 Lanjutan);1;1;4;14;3
+44;Sejarah;(S1);4;1;1;15;4

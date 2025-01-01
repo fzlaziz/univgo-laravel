@@ -1,0 +1,16 @@
+id;master_faculty_id;campus_id;name;description
+1;1;1;Fakultas Teknik;Fakultas yang mengajarkan tentang pembangunan infrastruktur dan konstruksi.
+2;2;2;Fakultas Komputer;Fakultas yang mempelajari integrasi teknologi informasi dan manajemen.
+3;3;5;Jurusan Keperawatan;.
+4;4;5;Jurusan Kebidanan;.
+5;5;5;Jurusan Gizi;.
+6;6;5;Jurusan Teknik Radiodiagnostik dan Radioterapi;.
+7;7;5;Jurusan Kesehatan Gigi;.
+8;8;5;Jurusan Analis Kesehatan;.
+9;9;5;Jurusan Rekam Medis dan Informasi Kesehatan;.
+10;10;1;Teknik Mesin;.
+11;11;1;Teknik Elektro;.
+12;12;1;Akuntansi;.
+13;13;1;Administrasi Bisnis;.
+14;14;1;Teknik Sipil;.
+15;15;4;Fakultas Ilmu Budaya;.
