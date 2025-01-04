@@ -1,6 +1,6 @@
 id;name;description
 1;Fakultas Teknik;Fakultas yang fokus pada bidang teknik dan rekayasa.
-2;Fakultas Ilmu Komputer;Fakultas yang mengajarkan ilmu komputer, informatika, dan sistem informasi.
+2;Fakultas Ilmu Komputer;"Fakultas yang mengajarkan ilmu komputer, informatika, dan sistem informasi."
 3;Keperawatan;
 4;Kebidanan;
 5;Gizi;
@@ -13,4 +13,3 @@ id;name;description
 12;Akuntansi;.
 13;Administrasi Bisnis;.
 14;Teknik Sipil;.
-15;Fakultas Ilmu Budaya;.

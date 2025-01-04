@@ -1,5 +1,43 @@
 id;name;description
-1;Teknik Mesin;Program studi yang mempelajari tentang perancangan, pengembangan, dan produksi mesin.
-2;Teknologi Rekayasa Komputer;Program studi yang fokus pada pengembangan teknologi komputer dan rekayasa perangkat keras.
-3;test;Program studi yang fokus pada pengembangan teknologi komputer dan rekayasa perangkat keras.
-4;Sejarah;.
+1;teknik listrik;"Fokus pada instalasi, distribusi daya, dan pemeliharaan sistem kelistrikan."
+2;teknik elektronika;"Perancangan, perbaikan, dan pemeliharaan perangkat elektronik."
+3;teknik telekomunikasi;Teknologi jaringan telekomunikasi dan komunikasi digital.
+4;teknik informatika;"Pemrograman, jaringan komputer, dan pengembangan aplikasi."
+5;teknik telekomunikasi;"Teknologi 5G, IoT, dan jaringan fiber optik."
+6;teknologi rekayasa instalasi listrik;Instalasi dan manajemen sistem listrik industri.
+7;teknologi rekayasa komputer;Desain sistem komputer dan perangkat cerdas.
+8;teknologi rekayasa elektronika;sistem embedded dan aplikasi elektronika industri.
+9;teknik telekomunikasi;"Riset teknologi telekomunikasi, AI, dan keamanan siber."
+10;teknik mesin;"Fokus pada desain, perawatan, dan pengoperasian mesin-mesin industri."
+11;teknik mesin produksi dan perawatan;Mengintegrasikan teknik produksi dan perawatan mesin untuk efisiensi industri.
+12;teknik konversi energi;"Mempelajari pembangkitan, distribusi, dan pengelolaan energi, termasuk energi terbarukan."
+13;teknologi rekayasa pembangkit energi;"Pengelolaan pembangkit energi, termasuk teknologi energi bersih dan berkelanjutan."
+14;kontruksi gedung;"Fokus pada perencanaan, pembangunan, dan pemeliharaan struktur gedung."
+15;teknik perawatan dan perbaikan gedung;"Spesialisasi dalam pemeliharaan, renovasi, dan pengelolaan gedung secara efektif."
+16;kontruksi sipil;"Mempelajari teknik pembangunan infrastruktur sipil seperti jalan, jembatan, dan saluran air."
+17;perancangan jalan dan jembatan;"Desain, perencanaan, dan pengelolaan proyek jalan raya dan jembatan."
+18;akuntansi;"Mempelajari pencatatan, pelaporan, dan analisis laporan keuangan."
+19;komputerisasi akuntansi;Integrasi akuntansi dengan teknologi informasi untuk otomasi proses keuangan.
+20;keuangan dan perbankan;"Fokus pada pengelolaan keuangan, operasional bank, dan manajemen investasi."
+21;perbankan syariah;Mempelajari prinsip keuangan berbasis syariah untuk operasional bank dan lembaga keuangan.
+22;analis keuangan;"Fokus pada evaluasi keuangan, investasi, dan manajemen risiko."
+23;akuntansi manajerial;Pengelolaan keuangan untuk pengambilan keputusan bisnis dan manajemen strategis.
+24;administrasi bisnis;"Fokus pada pengelolaan administrasi perusahaan, termasuk operasional, sumber daya manusia, dan layanan pelanggan."
+25;manajemen bisnis internasional;"Mengkaji strategi bisnis global, perdagangan internasional, dan manajemen lintas budaya."
+26;manajemen pemasaran;"Mempelajari strategi pemasaran, riset pasar, dan pengelolaan merek untuk meningkatkan penjualan."
+27;administrasi bisnis terapan;Pengelolaan bisnis berbasis praktik dengan penekanan pada inovasi dan efisiensi.
+28;Keperawatan Semarang;Mempelajari ilmu keperawatan dasar dan klinis untuk memberikan pelayanan kesehatan secara holistik.
+29;Keperawatan Semarang dan Profesi Ners;Program yang mencakup keperawatan akademik dan pelatihan profesi untuk menjadi perawat profesional.
+30;Kebidanan Semarang;"Fokus pada pendidikan kesehatan ibu dan anak, serta praktik kebidanan."
+31;Kebidanan Semarang dan Profesi Bidan;Menggabungkan pendidikan akademik kebidanan dengan pelatihan profesi bidan.
+32;Gizi Semarang;Mempelajari ilmu nutrisi dan penerapannya dalam menjaga kesehatan masyarakat.
+33;Gizi dan Dietetika;rogram yang mendalami pengelolaan diet untuk berbagai kondisi kesehatan.
+34;Profesi Dietisien;Pelatihan profesi untuk menjadi ahli diet yang menangani terapi gizi secara langsung.
+35;Radiologi Semarang;Fokus pada ilmu radiologi dan penerapan teknologi pencitraan medis.
+36;Teknik Radiologi Pencitraan Semarang;Mempelajari teknik pencitraan medis untuk diagnosis dan perawatan pasien.
+37;Kesehatan Gigi;"Mempelajari pencegahan, pemeliharaan, dan perawatan kesehatan gigi dan mulut."
+38;Terapi Gigi;Mengkaji teknik perawatan gigi untuk mengatasi masalah kesehatan mulut.
+39;Teknologi Laboratorium Medis;Mengembangkan kemampuan analisis laboratorium untuk mendukung diagnosis medis.
+40;Teknologi Laboratorium Medis;Mengembangkan kemampuan analisis laboratorium untuk mendukung diagnosis medis.
+41;Teknologi Bank Darah;"Mempelajari pengelolaan darah untuk keperluan medis, seperti transfusi dan penelitian."
+42;Rekam Medis dan Informasi Kesehatan;Fokus pada pengelolaan data medis dan informasi kesehatan berbasis teknologi.
