@@ -82,19 +82,24 @@ class CampusController extends Controller
      */
     public function show(Campus $campus)
     {
-        $news = $campus->news()->latest()->limit(5)->get();
-        $facilities = $campus->facilities()->get();
-        $galleries = $campus->galleries()->get();
-        $admission_statistics = $campus->admission_statistics()->get();
-        $campusData = $campus->load(['degree_levels'])->toArray();
-        $campusData = $campus->load(['admission_routes'])->toArray();
-        $campusData = $campus->load(['faculties'])->toArray();
-        $campusData['campus_type'] = $campus->campus_type->name;
-        $campusData['accreditation'] = $campus->accreditation->name;
-        $campusData['news'] = $news;
-        $campusData['galleries'] = $galleries;
-        $campusData['facilities'] = $facilities;
-        $campusData['admission_statistitcs'] = $admission_statistics;
+        $campusData = $campus->load([
+            'news' => function($query) {
+                $query->latest()->limit(5);
+            },
+            'facilities',
+            'galleries',
+            'admission_statistics',
+            'degree_levels',
+            'admission_routes',
+            'faculties',
+            'campus_type:id,name',
+            'accreditation:id,name',
+        ]);
+
+        $campusData = $campusData->toArray();
+
+        $campusData['campus_type'] = $campusData['campus_type']['name'];
+        $campusData['accreditation'] = $campusData['accreditation']['name'];
 
         return $campusData;
     }
@@ -156,42 +161,40 @@ class CampusController extends Controller
             3 => 'Swasta',
         ];
 
-        $topCampuses = collect($campusTypes)->mapWithKeys(function ($typeName, $typeId) {
-            $campuses = Campus::with(['accreditation', 'district.city.province', 'campus_rankings.campus_ranking', 'campus_type'])
-                ->where('campus_type_id', $typeId)
-                ->withCount('campus_rankings')
-                ->orderByRaw($this->getOrderByRawQuery())
+        $allCampuses = Campus::with([
+                'campus_type:id,name',
+                'campus_rankings:id,campus_id,rank'
+            ])
+            ->select([
+                'id',
+                'name',
+                'logo_path',
+                'accreditation_id',
+                'district_id',
+                'campus_type_id'
+            ])
+            ->withCount('campus_rankings')
+            ->orderByRaw($this->getOrderByRawQuery())
+            ->get()
+            ->groupBy('campus_type_id');
+
+        $topCampuses = collect($campusTypes)->mapWithKeys(function ($typeName, $typeId) use ($allCampuses) {
+            $typeCampuses = $allCampuses->get($typeId, collect())
                 ->take(10)
-                ->get()
                 ->map(function ($campus) {
-                    $bestRanking = $campus->campus_rankings->min(function ($campusCampusRanking) {
-                        return $campusCampusRanking->rank;
-                    });
-                    $bestRanking = $bestRanking !== null ? $bestRanking : 9999;
+                    $bestRanking = $campus->campus_rankings->min('rank') ?? 9999;
+
                     return [
                         'id' => $campus->id,
                         'name' => $campus->name,
                         'logo_path' => $campus->logo_path,
-                        'address_latitude' => (float) $campus->address_latitude,
-                        'address_longitude' => (float) $campus->address_longitude,
                         'rank_score' => $bestRanking,
-                        'accreditation_id' => $campus->accreditation_id,
-                        'district' => ucwords(strtolower($campus->district->name)),
-                        'district_id' => $campus->district->id,
-                        'city' => ucwords(strtolower($campus->district->city->name)),
-                        'city_id' => $campus->district->city->id,
-                        'province' => ucwords(strtolower($campus->district->city->province->name)),
-                        'province_id' => $campus->district->city->province->id,
                         'campus_type_id' => $campus->campus_type->id,
                         'campus_type' => $campus->campus_type->name,
-                        'accreditation' => [
-                            'id' => $campus->accreditation->id,
-                            'name' => $campus->accreditation->name,
-                        ],
                     ];
                 });
 
-            return [$typeName => $campuses];
+            return [$typeName => $typeCampuses->values()];
         });
 
         return response()->json($topCampuses);
@@ -211,59 +214,36 @@ class CampusController extends Controller
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
 
-        $query = Campus::with(['accreditation','district.city.province','campus_rankings.campus_ranking','campus_type','degree_levels']);
+        $query = Campus::query()->select([
+            'id',
+            'name',
+            'logo_path',
+            'address_latitude',
+            'address_longitude',
+        ]);
 
         if ($latitude && $longitude) {
-            $query->select('*',
-                DB::raw('(6371 * acos(cos(radians(' . $latitude . '))
-                    * cos(radians(address_latitude))
-                    * cos(radians(address_longitude) - radians(' . $longitude . '))
-                    + sin(radians(' . $latitude . '))
-                    * sin(radians(address_latitude)))) AS distance')
-            )
+            $latRad = deg2rad($latitude);
+            $lonRad = deg2rad($longitude);
+
+            $query->selectRaw("
+                (6371 * acos(
+                    cos(?) * cos(radians(address_latitude)) *
+                    cos(radians(address_longitude) - ?) +
+                    sin(?) * sin(radians(address_latitude))
+                )) AS distance
+            ", [$latRad, $lonRad, $latRad])
             ->orderBy('distance')
             ->limit(4);
         }
 
         return $query->get()->map(function ($campus) {
-            $bestRanking = $campus->campus_rankings->min(function ($campusCampusRanking) {
-                return $campusCampusRanking->rank;
-            });
-            $rankScore = $bestRanking !== null ? $bestRanking : 9999;
             return [
                 'id' => $campus->id,
                 'name' => $campus->name,
-                'description' => $campus->description,
-                'date_of_establishment' => $campus->date_of_establishment,
                 'logo_path' => $campus->logo_path,
                 'address_latitude' => (float) $campus->address_latitude,
                 'address_longitude' => (float) $campus->address_longitude,
-                'web_address' => $campus->web_address,
-                'phone_number' => $campus->phone_number,
-                'rank_score' => $rankScore,
-                'number_of_graduates' => $campus->number_of_graduates,
-                'number_of_registrants' => $campus->number_of_registrants,
-                'min_single_tuition' => $campus->min_single_tuition,
-                'max_single_tuition' => $campus->max_single_tuition,
-                'accreditation_id' => $campus->accreditation_id,
-                'district' => ucwords(strtolower($campus->district->name)),
-                'district_id' => $campus->district->id,
-                'city' => ucwords(strtolower($campus->district->city->name)),
-                'city_id' => $campus->district->city->id,
-                'province' => ucwords(strtolower($campus->district->city->province->name)),
-                'province_id' => $campus->district->city->province->id,
-                'campus_type_id' => $campus->campus_type->id,
-                'campus_type' => $campus->campus_type->name,
-                'accreditation' => [
-                    'id' => $campus->accreditation->id,
-                    'name' => $campus->accreditation->name,
-                ],
-                'degree_levels' => $campus->degree_levels->map(function ($degreeLevel) {
-                    return [
-                        'id' => $degreeLevel->id,
-                        'name' => $degreeLevel->name,
-                    ];
-                }),
                 'distance' => $campus->distance ?? null,
             ];
         });
