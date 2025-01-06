@@ -63,6 +63,7 @@ class CampusController extends Controller
                     return [
                         'id' => $degreeLevel->id,
                         'name' => $degreeLevel->name,
+                        'duration' => $degreeLevel->duration
                     ];
                 }),
             ];
