@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -25,7 +24,7 @@ class MasterFacultySeeder extends Seeder
 
         // Baca file CSV dengan pemisah ;
         $data = array_map(function ($line) {
-            return str_getcsv($line, ';');  // Menambahkan parameter pemisah ;
+            return str_getcsv($line, ';');
         }, file($filePath));
 
         // Ambil header dari baris pertama
@@ -36,18 +35,18 @@ class MasterFacultySeeder extends Seeder
             return array_combine($header, $row);
         }, $data);
 
-        // Gunakan updateOrInsert untuk menghindari duplikasi
-        foreach ($faculties as $faculty) {
-            DB::table('master_faculties')->updateOrInsert(
-                ['id' => $faculty['id']],  // Kondisi pencarian
-                [
-                    'name' => $faculty['name'],
-                    'description' => $faculty['description'] ?? '',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]
-            );
-        }
+        // Siapkan data untuk di-insert ke database
+        $insertData = array_map(function ($faculty) {
+            return [
+                'name' => $faculty['name'],
+                'description' => $faculty['description'] ?? '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }, $faculties);
+
+        // Masukkan data ke tabel
+        DB::table('master_faculties')->insert($insertData);
 
         echo "Data berhasil diimpor dari file CSV.\n";
     }
