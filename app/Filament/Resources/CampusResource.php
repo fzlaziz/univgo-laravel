@@ -9,6 +9,7 @@ use App\Filament\Resources\CampusResource\RelationManagers\FacilitiesRelationMan
 use App\Filament\Resources\CampusResource\RelationManagers\FacultiesRelationManager;
 use App\Filament\Resources\CampusResource\RelationManagers\GalleriesRelationManager;
 use App\Filament\Resources\CampusResource\RelationManagers\NewsRelationManager;
+use App\Filament\Resources\CampusResource\RelationManagers\ReviewsRelationManager;
 use App\Models\Accreditation;
 use App\Models\Campus;
 use App\Models\CampusType;
@@ -247,6 +248,7 @@ class CampusResource extends Resource
             FacilitiesRelationManager::class,
             GalleriesRelationManager::class,
             NewsRelationManager::class,
+            ReviewsRelationManager::class
         ];
     }
 
