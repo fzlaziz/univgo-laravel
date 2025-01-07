@@ -38,17 +38,14 @@ class FacultySeeder extends Seeder
 
         // Gunakan updateOrInsert untuk menghindari duplikasi
         foreach ($faculties as $faculty) {
-            DB::table('faculties')->updateOrInsert(
-                ['id' => $faculty['id']],  // Kondisi pencarian
-                [
-                    'master_faculty_id' => $faculty['master_faculty_id'],
-                    'campus_id' => $faculty['campus_id'],
-                    'name' => $faculty['name'],
-                    'description' => $faculty['description'] ?? '',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]
-            );
+            DB::table('faculties')->insert([
+                'master_faculty_id' => $faculty['master_faculty_id'],
+                'campus_id' => $faculty['campus_id'],
+                'name' => $faculty['name'],
+                'description' => $faculty['description'] ?? '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
 
         echo "Data berhasil diimpor dari file CSV.\n";

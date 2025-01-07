@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -25,29 +24,33 @@ class MasterStudyProgramSeeder extends Seeder
 
         // Baca file CSV dengan pemisah ;
         $data = array_map(function ($line) {
-            return str_getcsv($line, ';');  // Menambahkan parameter pemisah ;
+            return str_getcsv($line, ';');
         }, file($filePath));
 
         // Ambil header dari baris pertama
         $header = array_shift($data);
 
-        // Konversi setiap baris ke array asosiatif
-        $studyPrograms = array_map(function ($row) use ($header) {
+        // Validasi jumlah elemen per baris
+        $studyPrograms = array_filter(array_map(function ($row) use ($header) {
+            if (count($row) !== count($header)) {
+                echo "Baris tidak valid ditemukan, melewati baris ini.\n";
+                return null; // Abaikan baris yang tidak valid
+            }
             return array_combine($header, $row);
-        }, $data);
+        }, $data));
 
-        // Gunakan updateOrInsert untuk menghindari duplikasi
-        foreach ($studyPrograms as $studyProgram) {
-            DB::table('master_study_programs')->updateOrInsert(
-                ['id' => $studyProgram['id']],  // Kondisi pencarian
-                [
-                    'name' => $studyProgram['name'],
-                    'description' => $studyProgram['description'] ?? '',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]
-            );
-        }
+        // Siapkan data untuk di-insert ke database
+        $insertData = array_map(function ($program) {
+            return [
+                'name' => $program['name'],
+                'description' => $program['description'] ?? '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }, $studyPrograms);
+
+        // Masukkan data ke tabel
+        DB::table('master_study_programs')->insert($insertData);
 
         echo "Data berhasil diimpor dari file CSV.\n";
     }

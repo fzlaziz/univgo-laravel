@@ -36,7 +36,7 @@ class StudyProgramSeeder extends Seeder
             return array_combine($header, $row);
         }, $data);
 
-        // Gunakan updateOrInsert untuk menghindari duplikasi
+        // Gunakan insert untuk menyisipkan data tanpa memeriksa duplikasi
         foreach ($studyPrograms as $studyProgram) {
             // Ambil id untuk relasi yang diperlukan
             $accreditation = DB::table('accreditations')->where('id', $studyProgram['accreditation_id'])->first();
@@ -44,21 +44,18 @@ class StudyProgramSeeder extends Seeder
             $faculty = DB::table('faculties')->where('id', $studyProgram['faculty_id'])->first();
             $masterStudyProgram = DB::table('master_study_programs')->where('id', $studyProgram['master_study_program_id'])->first();
 
-            // Gunakan updateOrInsert untuk menghindari duplikasi
-            DB::table('study_programs')->updateOrInsert(
-                ['id' => $studyProgram['id']],  // Kondisi pencarian
-                [
-                    'name' => $studyProgram['name'],
-                    'description' => $studyProgram['description'] ?? '',
-                    'campus_id' => $studyProgram['campus_id'],
-                    'accreditation_id' => $accreditation->id ?? null,
-                    'degree_level_id' => $degreeLevel->id ?? null,
-                    'faculty_id' => $faculty->id ?? null,
-                    'master_study_program_id' => $masterStudyProgram->id ?? null,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]
-            );
+            // Sisipkan data ke tabel study_programs
+            DB::table('study_programs')->insert([
+                'name' => $studyProgram['name'],
+                'description' => $studyProgram['description'] ?? '',
+                'campus_id' => $studyProgram['campus_id'],
+                'accreditation_id' => $accreditation->id ?? null,
+                'degree_level_id' => $degreeLevel->id ?? null,
+                'faculty_id' => $faculty->id ?? null,
+                'master_study_program_id' => $masterStudyProgram->id ?? null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
 
         echo "Data berhasil diimpor dari file CSV.\n";

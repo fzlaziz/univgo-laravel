@@ -33,9 +33,9 @@ class CampusSeeder extends Seeder
         // Ambil header dari file CSV
         $header = array_shift($data);
 
-        // Validasi header untuk memastikan kolom yang diperlukan ada
+        // Validasi header untuk memastikan kolom yang diperlukan ada (kecuali id)
         $requiredColumns = [
-            'id', 'name', 'description', 'date_of_establishment', 'logo_path',
+            'name', 'description', 'date_of_establishment', 'logo_path',
             'address_latitude', 'address_longitude', 'web_address', 'phone_number',
             'email', 'youtube', 'instagram', 'number_of_graduates', 'number_of_registrants',
             'min_single_tuition', 'max_single_tuition', 'campus_type_id',
@@ -57,35 +57,36 @@ class CampusSeeder extends Seeder
             return;
         }
 
-        // Masukkan atau perbarui data ke tabel campuses
+        // Masukkan data ke tabel campuses tanpa kolom id
+        $batchData = [];
         foreach ($rows as $row) {
-            DB::table('campuses')->updateOrInsert(
-                ['id' => (int)$row['id']], // Kondisi untuk update jika id sudah ada
-                [
-                    'name' => $row['name'],
-                    'description' => $row['description'],
-                    'date_of_establishment' => $row['date_of_establishment'],
-                    'logo_path' => $row['logo_path'],
-                    'address_latitude' => (float)$row['address_latitude'],
-                    'address_longitude' => (float)$row['address_longitude'],
-                    'web_address' => $row['web_address'],
-                    'phone_number' => $row['phone_number'],
-                    'email' => $row['email'],
-                    'youtube' => $row['youtube'],
-                    'instagram' => $row['instagram'],
-                    'number_of_graduates' => (int)$row['number_of_graduates'],
-                    'number_of_registrants' => (int)$row['number_of_registrants'],
-                    'min_single_tuition' => (int)$row['min_single_tuition'],
-                    'max_single_tuition' => (int)$row['max_single_tuition'],
-                    'campus_type_id' => (int)$row['campus_type_id'],
-                    'accreditation_id' => (int)$row['accreditation_id'],
-                    'district_id' => (int)$row['district_id'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]
-            );
+            $batchData[] = [
+                'name' => $row['name'],
+                'description' => $row['description'],
+                'date_of_establishment' => $row['date_of_establishment'],
+                'logo_path' => $row['logo_path'],
+                'address_latitude' => (float)$row['address_latitude'],
+                'address_longitude' => (float)$row['address_longitude'],
+                'web_address' => $row['web_address'],
+                'phone_number' => $row['phone_number'],
+                'email' => $row['email'],
+                'youtube' => $row['youtube'],
+                'instagram' => $row['instagram'],
+                'number_of_graduates' => (int)$row['number_of_graduates'],
+                'number_of_registrants' => (int)$row['number_of_registrants'],
+                'min_single_tuition' => (int)$row['min_single_tuition'],
+                'max_single_tuition' => (int)$row['max_single_tuition'],
+                'campus_type_id' => (int)$row['campus_type_id'],
+                'accreditation_id' => (int)$row['accreditation_id'],
+                'district_id' => (int)$row['district_id'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
         }
 
-        $this->command->info("Data kampus berhasil dimasukkan atau diperbarui di database.");
+        // Batch insert untuk performa lebih baik
+        DB::table('campuses')->insert($batchData);
+
+        $this->command->info("Data kampus berhasil dimasukkan ke database tanpa kolom ID.");
     }
 }
