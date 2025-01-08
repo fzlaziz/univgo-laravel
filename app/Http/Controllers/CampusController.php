@@ -138,6 +138,7 @@ class CampusController extends Controller
             return [
                 'id' => $review->id,
                 'user' => $review->user->name,
+                'user_id' => $review->user->id,
                 'user_profile_image' => $review->user->profile_image,
                 'rating' => $review->rating,
                 'review' => $review->review,
