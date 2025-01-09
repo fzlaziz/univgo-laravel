@@ -124,7 +124,26 @@ class CampusReviewController extends Controller
      */
     public function destroy(CampusReview $campusReview)
     {
-        //
+        try {
+            if ($campusReview->user_id !== auth()->id()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Anda tidak memiliki akses untuk menghapus ulasan ini.',
+                ], 403);
+            }
+
+            $campusReview->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Ulasan berhasil dihapus.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menghapus ulasan.',
+            ], 500);
+        }
     }
 
 

@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/news/{news}/comments', [NewsCommentController::class, 'store']);
     Route::post('/campus_reviews/{campus}', [CampusReviewController::class, 'store']);
     Route::post('/campus_reviews/{id}/edit', [CampusReviewController::class, 'update']);
+    Route::delete('/campus_reviews/{campusReview}', [CampusReviewController::class, 'destroy']);
 });
 
 Route::get('/campuses/top-10', [CampusController::class, 'top_ten']);
