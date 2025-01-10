@@ -34,10 +34,10 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/news', [NewsController::class, 'index']);
 Route::get('/news/latest', [NewsController::class, 'latest']);
 Route::get('/news/{news}', [NewsController::class, 'show']);
-Route::get('/news/{news}/comments', [NewsCommentController::class, 'index']);
-Route::delete('/news_comments/{newsComment}', [NewsCommentController::class, 'destroy']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/news/{news}/comments', [NewsCommentController::class, 'index']);
+    Route::delete('/news_comments/{newsComment}', [NewsCommentController::class, 'destroy']);
     Route::post('/news/{news}/comments', [NewsCommentController::class, 'store']);
     Route::post('/campus_reviews/{campus}', [CampusReviewController::class, 'store']);
     Route::post('/campus_reviews/{id}/edit', [CampusReviewController::class, 'update']);
