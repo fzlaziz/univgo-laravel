@@ -35,6 +35,7 @@ Route::get('/news', [NewsController::class, 'index']);
 Route::get('/news/latest', [NewsController::class, 'latest']);
 Route::get('/news/{news}', [NewsController::class, 'show']);
 Route::get('/news/{news}/comments', [NewsCommentController::class, 'index']);
+Route::delete('/news_comments/{newsComment}', [NewsCommentController::class, 'destroy']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/news/{news}/comments', [NewsCommentController::class, 'store']);

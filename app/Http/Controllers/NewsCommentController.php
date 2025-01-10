@@ -75,6 +75,25 @@ class NewsCommentController extends Controller
      */
     public function destroy(NewsComment $newsComment)
     {
-        //
+        try {
+            if ($newsComment->user_id !== auth()->id()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Anda tidak memiliki akses untuk menghapus komentar ini.',
+                ], 403);
+            }
+
+            $newsComment->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Komentar berhasil dihapus.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menghapus komentar.',
+            ], 500);
+        }
     }
 }
