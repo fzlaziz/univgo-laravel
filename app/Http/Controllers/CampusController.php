@@ -143,7 +143,7 @@ class CampusController extends Controller
             })->take(4);
         }
 
-        $formattedReviews = $reviews->map(function ($review) {
+        $formattedReviews = $reviews->values()->map(function ($review) {
             return [
                 'id' => $review->id,
                 'user' => $review->user->name,
@@ -165,7 +165,6 @@ class CampusController extends Controller
             ],
         ]);
     }
-
     public function top_ten()
     {
         $campusTypes = [
