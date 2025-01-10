@@ -127,14 +127,23 @@ class CampusController extends Controller
         return response()->json($faculties);
     }
 
-    public function reviews($campusId)
+    public function reviews($campusId, Request $request)
     {
         $campus = Campus::with('reviews.user')->findOrFail($campusId);
+        $reviews = $campus->reviews;
 
-        $totalReviews = $campus->reviews->count();
-        $averageRating = $campus->reviews->avg('rating');
+        $totalReviews = $reviews->count();
+        $averageRating = $reviews->avg('rating');
 
-        $reviews = $campus->reviews->map(function ($review) {
+        if ($request->query('preview') === 'true') {
+            $reviews = $reviews->sortBy(function ($review) {
+                $daysSinceCreation = now()->diffInDays($review->created_at);
+                $recencyScore = max(0, 2.5 - ($daysSinceCreation / 30));
+                return -($review->rating + $recencyScore);
+            })->take(4);
+        }
+
+        $formattedReviews = $reviews->map(function ($review) {
             return [
                 'id' => $review->id,
                 'user' => $review->user->name,
@@ -151,7 +160,8 @@ class CampusController extends Controller
             'data' => [
                 'total_reviews' => $totalReviews,
                 'average_rating' => round($averageRating, 1),
-                'reviews' => $reviews,
+                'reviews' => $formattedReviews,
+                'is_preview' => $request->query('preview') === 'true',
             ],
         ]);
     }
