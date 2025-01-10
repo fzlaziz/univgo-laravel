@@ -22,7 +22,7 @@ class NewsCommentController extends Controller
         $newsComments = $news->news_comments()->with('user')->get();
         $newsComments = $news->news_comments()
             ->select('id', 'text', 'news_id', 'user_id', 'created_at')
-            ->with(['user:id,name,email'])
+            ->with(['user:id,name,email,profile_image'])
             ->get();
 
         return response()->json($newsComments, 200);
