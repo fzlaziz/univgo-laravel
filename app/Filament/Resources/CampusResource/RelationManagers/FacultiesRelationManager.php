@@ -52,8 +52,10 @@ class FacultiesRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
+                    ->iconButton()
                     ->url(fn ($record): string => FacultyResource::getUrl('edit', ['record' => $record])),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->iconButton(),
             ])
             ->bulkActions([
             ]);

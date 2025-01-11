@@ -10,43 +10,35 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class FacilitiesRelationManager extends RelationManager
+class CampusRegistrationRecordsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'facilities';
+    protected static string $relationship = 'campus_registration_records';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('year')
+                    ->numeric()
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
+                    ->unique(ignoreRecord: true)
+                    ->maxLength(4),
+                Forms\Components\TextInput::make('total_registrants')
+                    ->numeric()
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('file_location')
-                    ->label('Upload Facilities Image')
-                    ->image()
-                    ->disk(env('FILESYSTEM_DISK', 'public'))
-                    ->directory('campus-facilities')
-                    ->default(null)
-                    ->visibility('public')
-                    ->image()
-                    ->imageEditor()
-                    ->imageEditorAspectRatios([
-                        '4:3',
-                        '16:9',
-                    ]),
+                    ->unique()
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('name')
+            ->recordTitleAttribute('year')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('year')->sortable(),
+                Tables\Columns\TextColumn::make('total_registrants')->sortable(),
             ])
+            ->defaultSort('year', 'desc')
             ->filters([
                 //
             ])

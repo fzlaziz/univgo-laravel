@@ -93,6 +93,10 @@ class CampusController extends Controller
             'degree_levels',
             'admission_routes',
             'faculties',
+            'campus_registration_records' => function($query) {
+                $query->select('id', 'total_registrants', 'year', 'campus_id')
+                      ->lastFiveYear();
+            },
             'campus_type:id,name',
             'accreditation:id,name',
         ]);

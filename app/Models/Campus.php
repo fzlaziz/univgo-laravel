@@ -84,6 +84,10 @@ class Campus extends Model
         return $this->hasMany(CampusReview::class);
     }
 
+    public function campus_registration_records()
+    {
+        return $this->hasMany(CampusRegistrationRecord::class);
+    }
 
 }
 

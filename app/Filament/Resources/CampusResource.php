@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CampusResource\Pages;
 use App\Filament\Resources\CampusResource\RelationManagers;
 use App\Filament\Resources\CampusResource\RelationManagers\CampusRankingsRelationManager;
+use App\Filament\Resources\CampusResource\RelationManagers\CampusRegistrationRecordsRelationManager;
 use App\Filament\Resources\CampusResource\RelationManagers\FacilitiesRelationManager;
 use App\Filament\Resources\CampusResource\RelationManagers\FacultiesRelationManager;
 use App\Filament\Resources\CampusResource\RelationManagers\GalleriesRelationManager;
@@ -248,7 +249,8 @@ class CampusResource extends Resource
             FacilitiesRelationManager::class,
             GalleriesRelationManager::class,
             NewsRelationManager::class,
-            ReviewsRelationManager::class
+            ReviewsRelationManager::class,
+            CampusRegistrationRecordsRelationManager::class,
         ];
     }
 
