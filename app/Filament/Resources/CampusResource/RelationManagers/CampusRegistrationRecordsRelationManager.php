@@ -57,4 +57,5 @@ class CampusRegistrationRecordsRelationManager extends RelationManager
                 ]),
             ]);
     }
+    // public function isReadOnly(): bool { return false; }
 }

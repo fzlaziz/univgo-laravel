@@ -15,11 +15,11 @@ class CampusRankingSeeder extends Seeder
     public function run(): void
     {
         $id_polines = 1;
-        $id_undip = 2;
-        $id_unnes = 3;
-        $id_udinus = 4;
-        $id_poltekkes = 5;
-        // // Insert campus rankings
+        $id_undip = 4;
+        $id_unnes = 6;
+        $id_udinus = 7;
+        $id_poltekkes = 27;
+
         $webometricsId = DB::table('campus_rankings')->insertGetId([
             'source' => 'Webometrics',
             'created_at' => now(),

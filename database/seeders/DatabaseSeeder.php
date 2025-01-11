@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
         $this->call(NewsCommentSeeder::class);
         $this->call(StudyProgramSeeder::class);
         $this->call(CampusRankingSeeder::class);
-
+        $this->call(CampusRegistrationRecordSeeder::class);
 
     }
 }
