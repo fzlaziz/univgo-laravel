@@ -22,7 +22,7 @@ class StudyProgramController extends Controller
     public function index()
     {
         return StudyProgram::with([
-            'campus:id,name,campus_type_id,district_id',
+            'campus:id,name,campus_type_id,district_id,min_single_tuition,max_single_tuition,address_latitude,address_longitude',
             'campus.campus_rankings',
             'degree_level:id,name',
             'campus.campus_type:id,name',
@@ -58,6 +58,10 @@ class StudyProgramController extends Controller
                 'province_id' => $studyProgram->campus?->district?->city?->province?->id,
                 'degree_level' => $studyProgram->degree_level?->name,
                 'degree_level_id' => $studyProgram->degree_level?->id,
+                'min_single_tuition' => $studyProgram->campus?->min_single_tuition,
+                'max_single_tuition' => $studyProgram->campus?->max_single_tuition,
+                'address_latitude' => $studyProgram->campus?->address_latitude,
+                'address_longitude' => $studyProgram->campus?->address_longitude,
             ];
         });
     }
