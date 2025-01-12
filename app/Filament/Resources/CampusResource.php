@@ -25,6 +25,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Forms\Components\MapField;
 
 class CampusResource extends Resource
 {
@@ -55,6 +56,10 @@ class CampusResource extends Resource
                             ->native(false)
                             ->displayFormat('d F Y')
                             ->required(),
+                        MapField::make('address_search')
+                            ->latitudeField('address_latitude')
+                            ->longitudeField('address_longitude')
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('address_latitude')
                             ->required(),
                         Forms\Components\TextInput::make('address_longitude')
