@@ -106,6 +106,7 @@ class StudyProgramController extends Controller
                  'accreditation_id' => $studyProgram->accreditation?->id,
                  'accreditation' => $studyProgram->accreditation?->name,
                  'campus' => $studyProgram->campus?->name,
+                 'campus_id' => $studyProgram->campus?->id,
                  'campus_type_id' => $studyProgram->campus?->campus_type?->id,
                  'campus_type' => $studyProgram->campus?->campus_type?->name,
                  'district' => ucwords(strtolower($studyProgram->campus?->district?->name)),
@@ -125,7 +126,7 @@ class StudyProgramController extends Controller
 
          return response()->json($studyPrograms);
      }
-     
+
 
     // manual query
     // public function index()
