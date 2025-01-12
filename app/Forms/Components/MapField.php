@@ -1,13 +1,12 @@
 <?php
-
 namespace App\Forms\Components;
 
 use Filament\Forms\Components\Field;
+use Filament\Support\Concerns\HasExtraAlpineAttributes;
 
 class MapField extends Field
 {
     protected string $view = 'forms.components.map-field';
-
     protected string $latitudeField = '';
     protected string $longitudeField = '';
 
@@ -36,7 +35,7 @@ class MapField extends Field
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->dehydrated(false);
+        $this->id('map-' . str_replace('.', '-', $this->getName()));
     }
 }

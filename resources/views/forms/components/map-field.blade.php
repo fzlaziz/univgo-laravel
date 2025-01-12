@@ -13,9 +13,22 @@
                 mapInitialized: false,
 
                 init() {
-                    if (this.mapInitialized) return;
+                    this.loadMapDependencies();
 
-                    // Load Leaflet CSS
+                    Livewire.hook('element.updated', (el, component) => {
+                        if (this.map) {
+                            setTimeout(() => {
+                                this.map.invalidateSize();
+                                if (this.lat && this.lng) {
+                                    this.map.setView([this.lat, this.lng], 13);
+                                    this.marker.setLatLng([this.lat, this.lng]);
+                                }
+                            }, 200);
+                        }
+                    });
+                },
+
+                loadMapDependencies() {
                     if (!document.querySelector('[data-leaflet-css]')) {
                         const link = document.createElement('link');
                         link.setAttribute('rel', 'stylesheet');
@@ -24,72 +37,70 @@
                         document.head.appendChild(link);
                     }
 
-                    // Load Leaflet JS
                     if (!window.L) {
                         const script = document.createElement('script');
                         script.src = 'https://unpkg.com/leaflet@1.9.3/dist/leaflet.js';
-                        script.onload = () => {
-                            setTimeout(() => this.initializeMap(), 100);
-                        };
+                        script.onload = () => this.initializeMap();
                         document.head.appendChild(script);
                     } else {
-                        setTimeout(() => this.initializeMap(), 100);
+                        this.initializeMap();
                     }
                 },
 
                 initializeMap() {
-                    if (this.mapInitialized) return;
+                    if (this.map) {
+                        this.map.remove();
+                        this.map = null;
+                        this.marker = null;
+                        this.mapInitialized = false;
+                    }
 
                     const initialLat = this.lat || -6.2088;
                     const initialLng = this.lng || 106.8456;
 
-                    $refs.map.style.height = '400px';
+                    if (!$refs.map.offsetWidth) {
+                        setTimeout(() => this.initializeMap(), 100);
+                        return;
+                    }
 
-                    const tryInitMap = () => {
-                        try {
-                            const style = document.createElement('style');
-                            style.textContent = `
-                                .leaflet-container { z-index: 10 !important; }
-                                .leaflet-control { z-index: 11 !important; }
-                                .leaflet-popup { z-index: 12 !important; }
-                                .leaflet-overlay-pane { z-index: 5 !important; }
-                            `;
-                            document.head.appendChild(style);
+                    try {
+                        $refs.map.innerHTML = '';
 
-                            this.map = L.map($refs.map).setView([initialLat, initialLng], 13);
+                        this.map = L.map($refs.map, {
+                            center: [initialLat, initialLng],
+                            zoom: 13,
+                            preferCanvas: true
+                        });
 
-                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                maxZoom: 19,
-                                attribution: '© OpenStreetMap'
-                            }).addTo(this.map);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '© OpenStreetMap'
+                        }).addTo(this.map);
 
-                            this.marker = L.marker([initialLat, initialLng], {
-                                draggable: true
-                            }).addTo(this.map);
+                        this.marker = L.marker([initialLat, initialLng], {
+                            draggable: true
+                        }).addTo(this.map);
 
-                            this.marker.on('dragend', () => {
-                                const position = this.marker.getLatLng();
-                                this.lat = position.lat;
-                                this.lng = position.lng;
-                                this.updateReverseGeocode(position.lat, position.lng);
-                            });
+                        this.marker.on('dragend', () => {
+                            const position = this.marker.getLatLng();
+                            this.lat = position.lat;
+                            this.lng = position.lng;
+                            this.updateReverseGeocode(position.lat, position.lng);
+                        });
 
-                            this.mapInitialized = true;
+                        this.mapInitialized = true;
 
-                            if (this.lat && this.lng) {
-                                this.updateReverseGeocode(this.lat, this.lng);
-                            }
-
-                            setTimeout(() => {
-                                this.map.invalidateSize();
-                            }, 100);
-                        } catch (error) {
-                            console.error('Map initialization failed, retrying...', error);
-                            setTimeout(tryInitMap, 100);
+                        if (this.lat && this.lng) {
+                            this.updateReverseGeocode(this.lat, this.lng);
                         }
-                    };
 
-                    tryInitMap();
+                        setTimeout(() => {
+                            this.map.invalidateSize();
+                        }, 200);
+                    } catch (error) {
+                        console.error('Map initialization failed:', error);
+                        setTimeout(() => this.initializeMap(), 200);
+                    }
                 },
 
                 async searchLocation() {
@@ -109,8 +120,10 @@
                             this.lat = lat;
                             this.lng = lng;
 
-                            this.map.setView([lat, lng], 13);
-                            this.marker.setLatLng([lat, lng]);
+                            if (this.map && this.marker) {
+                                this.map.setView([lat, lng], 13);
+                                this.marker.setLatLng([lat, lng]);
+                            }
                         }
                     } catch (error) {
                         console.error('Error searching location:', error);
@@ -133,6 +146,7 @@
                 }
             }"
             x-init="init"
+            wire:ignore
         >
             <div class="space-y-4">
                 {{-- Search Field Input --}}
@@ -152,9 +166,12 @@
                         {{ __('Search') }}
                     </button>
                 </div>
-
                 {{-- Map Container --}}
-                <div x-ref="map" class="rounded-lg border border-gray-300 dark:border-gray-600" style="width: 100%; height: 400px;"></div>
+                <div
+                    x-ref="map"
+                    class="rounded-lg border border-gray-300 dark:border-gray-600"
+                    style="width: 100%; height: 400px;"
+                ></div>
             </div>
         </div>
     </div>
