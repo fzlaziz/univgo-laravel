@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
+use Filament\Support\Facades\FilamentView;
+use Illuminate\Contracts\View\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +29,9 @@ class AppServiceProvider extends ServiceProvider
         if (app()->environment('production')) {
             URL::forceScheme('https');
         }
+        FilamentView::registerRenderHook(
+            'panels::auth.login.form.after',
+            fn (): View => view('filament.login_extra')
+        );
     }
 }

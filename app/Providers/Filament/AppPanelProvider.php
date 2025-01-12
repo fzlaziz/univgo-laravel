@@ -26,11 +26,10 @@ class AppPanelProvider extends PanelProvider
             ->default()
             ->sidebarCollapsibleOnDesktop()
             ->id('app')
-            ->path('/')
+            ->path('/admin')
             ->login()
             ->font('Poppins')
-            ->brandName('UnivGo')
-            // ->spa()
+            ->brandName('UnivGO')
             ->colors([
                 'danger' => Color::Rose,
                 'gray' => Color::Slate,
