@@ -54,5 +54,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CampusRankingSeeder::class);
         $this->call(CampusRegistrationRecordSeeder::class);
 
+        $this->call(FacilitySeeder::class);
+        $this->call(GallerySeeder::class);
     }
 }
