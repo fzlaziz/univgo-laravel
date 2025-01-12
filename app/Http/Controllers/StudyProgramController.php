@@ -19,53 +19,113 @@ class StudyProgramController extends Controller
      *     @OA\Response(response=200, description="List of study programs with details"),
      * )
      */
-    public function index()
-    {
-        return StudyProgram::with([
-            'campus:id,name,campus_type_id,district_id,min_single_tuition,max_single_tuition,address_latitude,address_longitude',
-            'campus.campus_rankings',
-            'degree_level:id,name',
-            'campus.campus_type:id,name',
-            'accreditation:id,name',
-            'campus.district:id,name,code,city_code',
-            'campus.district.city:id,name,code,province_code',
-            'campus.district.city.province:id,name,code'
-        ])
-        ->select([
-            'id',
-            'name',
-            'campus_id',
-            'degree_level_id',
-            'accreditation_id',
-            DB::raw('LEAST(COALESCE((SELECT MIN(rank) FROM campus_campus_ranking WHERE campus_id = study_programs.campus_id), 9999), 9999) as rank_score')
-        ])
-        ->get()
-        ->map(function ($studyProgram) {
-            return [
-                'id' => $studyProgram->id,
-                'name' => $studyProgram->name,
-                'rank_score' => $studyProgram->rank_score,
-                'accreditation_id' => $studyProgram->accreditation?->id,
-                'accreditation' => $studyProgram->accreditation?->name,
-                'campus' => $studyProgram->campus?->name,
-                'campus_type_id' => $studyProgram->campus?->campus_type?->id,
-                'campus_type' => $studyProgram->campus?->campus_type?->name,
-                'district' => ucwords(strtolower($studyProgram->campus?->district?->name)),
-                'district_id' => $studyProgram->campus?->district?->id,
-                'city' => ucwords(strtolower($studyProgram->campus?->district?->city?->name)),
-                'city_id' => $studyProgram->campus?->district?->city?->id,
-                'province' => ucwords(strtolower($studyProgram->campus?->district?->city?->province?->name)),
-                'province_id' => $studyProgram->campus?->district?->city?->province?->id,
-                'degree_level' => $studyProgram->degree_level?->name,
-                'degree_level_id' => $studyProgram->degree_level?->id,
-                'min_single_tuition' => $studyProgram->campus?->min_single_tuition,
-                'max_single_tuition' => $studyProgram->campus?->max_single_tuition,
-                'address_latitude' => $studyProgram->campus?->address_latitude,
-                'address_longitude' => $studyProgram->campus?->address_longitude,
-            ];
-        });
-    }
 
+     public function index(Request $request)
+     {
+         $query = StudyProgram::with([
+             'campus:id,name,campus_type_id,district_id,min_single_tuition,max_single_tuition,address_latitude,address_longitude',
+             'campus.campus_rankings',
+             'degree_level:id,name',
+             'campus.campus_type:id,name',
+             'accreditation:id,name',
+             'campus.district:id,name,code,city_code',
+             'campus.district.city:id,name,code,province_code',
+             'campus.district.city.province:id,name,code'
+         ])
+         ->select([
+             'study_programs.id',
+             'study_programs.name',
+             'study_programs.campus_id',
+             'study_programs.degree_level_id',
+             'study_programs.accreditation_id',
+             DB::raw('LEAST(COALESCE((SELECT MIN(rank) FROM campus_campus_ranking WHERE campus_id = study_programs.campus_id), 9999), 9999) as rank_score')
+         ]);
+
+         if ($request->has('search')) {
+             $searchTerm = $request->search;
+             $query->where(function($q) use ($searchTerm) {
+                 $q->where('study_programs.name', 'LIKE', "%{$searchTerm}%")
+                   ->orWhereHas('campus', function($q) use ($searchTerm) {
+                       $q->where('name', 'LIKE', "%{$searchTerm}%");
+                   });
+             });
+         }
+
+         if ($request->filled('location')) {
+             $locationIds = is_array($request->location) ? $request->location : [$request->location];
+             $query->whereHas('campus.district.city.province', function($q) use ($locationIds) {
+                 $q->whereIn('id', $locationIds);
+             });
+         }
+
+         if ($request->filled('campus_type')) {
+             $campusTypeIds = is_array($request->campus_type) ? $request->campus_type : [$request->campus_type];
+             $query->whereHas('campus', function($q) use ($campusTypeIds) {
+                 $q->whereIn('campus_type_id', $campusTypeIds);
+             });
+         }
+
+         if ($request->filled('degree_level')) {
+             $degreeLevelIds = is_array($request->degree_level) ? $request->degree_level : [$request->degree_level];
+             $query->whereIn('degree_level_id', $degreeLevelIds);
+         }
+
+         if ($request->filled('accreditation')) {
+             $accreditationIds = is_array($request->accreditation) ? $request->accreditation : [$request->accreditation];
+             $query->whereIn('accreditation_id', $accreditationIds);
+         }
+
+         if ($request->has('sort_by')) {
+             switch ($request->sort_by) {
+                 case 'min_single_tuition':
+                     $query->join('campuses', 'study_programs.campus_id', '=', 'campuses.id')
+                           ->orderBy('campuses.min_single_tuition', 'asc');
+                     break;
+                 case 'max_single_tuition':
+                     $query->join('campuses', 'study_programs.campus_id', '=', 'campuses.id')
+                           ->orderBy('campuses.max_single_tuition', 'desc');
+                     break;
+                 case 'rank_score':
+                     $query->orderBy('rank_score', 'asc');
+                     break;
+                 case 'nearest':
+                     // No sorting for 'nearest' - will be handled client-side
+                     break;
+                 default:
+                     $query->orderBy('study_programs.name', 'asc');
+             }
+         } else {
+             $query->orderBy('study_programs.name', 'asc');
+         }
+
+         $studyPrograms = $query->get()->map(function ($studyProgram) {
+             return [
+                 'id' => $studyProgram->id,
+                 'name' => $studyProgram->name,
+                 'rank_score' => $studyProgram->rank_score,
+                 'accreditation_id' => $studyProgram->accreditation?->id,
+                 'accreditation' => $studyProgram->accreditation?->name,
+                 'campus' => $studyProgram->campus?->name,
+                 'campus_type_id' => $studyProgram->campus?->campus_type?->id,
+                 'campus_type' => $studyProgram->campus?->campus_type?->name,
+                 'district' => ucwords(strtolower($studyProgram->campus?->district?->name)),
+                 'district_id' => $studyProgram->campus?->district?->id,
+                 'city' => ucwords(strtolower($studyProgram->campus?->district?->city?->name)),
+                 'city_id' => $studyProgram->campus?->district?->city?->id,
+                 'province' => ucwords(strtolower($studyProgram->campus?->district?->city?->province?->name)),
+                 'province_id' => $studyProgram->campus?->district?->city?->province?->id,
+                 'degree_level' => $studyProgram->degree_level?->name,
+                 'degree_level_id' => $studyProgram->degree_level?->id,
+                 'min_single_tuition' => $studyProgram->campus?->min_single_tuition,
+                 'max_single_tuition' => $studyProgram->campus?->max_single_tuition,
+                 'address_latitude' => $studyProgram->campus?->address_latitude,
+                 'address_longitude' => $studyProgram->campus?->address_longitude,
+             ];
+         });
+
+         return response()->json($studyPrograms);
+     }
+     
 
     // manual query
     // public function index()

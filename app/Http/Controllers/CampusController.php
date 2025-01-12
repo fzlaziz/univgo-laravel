@@ -20,13 +20,62 @@ class CampusController extends Controller
      *     @OA\Response(response=200, description="List of campuses with details"),
      * )
      */
-
-    public function index()
+    public function index(Request $request)
     {
-        return Campus::with(['accreditation','district.city.province','campus_rankings.campus_ranking','campus_type','degree_levels'])
-        ->get()
-        ->map(function ($campus) {
-            // Find the best ranking across all ranking sources
+        $query = Campus::with([
+            'accreditation',
+            'district.city.province',
+            'campus_rankings.campus_ranking',
+            'campus_type',
+            'degree_levels'
+        ]);
+
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            $query->where('name', 'LIKE', "%{$searchTerm}%");
+        }
+
+        if ($request->filled('location')) {
+            $locationIds = is_array($request->location) ? $request->location : [$request->location];
+            $query->whereHas('district.city.province', function($q) use ($locationIds) {
+                $q->whereIn('id', $locationIds);
+            });
+        }
+
+        if ($request->filled('campus_type')) {
+            $campusTypeIds = is_array($request->campus_type) ? $request->campus_type : [$request->campus_type];
+            $query->whereIn('campus_type_id', $campusTypeIds);
+        }
+
+        if ($request->filled('accreditation')) {
+            $accreditationIds = is_array($request->accreditation) ? $request->accreditation : [$request->accreditation];
+            $query->whereIn('accreditation_id', $accreditationIds);
+        }
+
+        if ($request->filled('degree_level')) {
+            $degreeLevelIds = is_array($request->degree_level) ? $request->degree_level : [$request->degree_level];
+            $query->whereHas('degree_levels', function($q) use ($degreeLevelIds) {
+                $q->whereIn('degree_levels.id', $degreeLevelIds);
+            });
+        }
+
+        if ($request->has('sort_by') && $request->sort_by !== 'nearest') {
+            switch ($request->sort_by) {
+                case 'min_single_tuition':
+                    $query->orderBy('min_single_tuition', 'asc');
+                    break;
+                case 'max_single_tuition':
+                    $query->orderBy('max_single_tuition', 'desc');
+                    break;
+                case 'rank_score':
+                    $query->orderByRaw('LEAST(COALESCE((SELECT MIN(rank) FROM campus_campus_ranking WHERE campus_id = campuses.id), 9999), 9999)');
+                    break;
+                default:
+                    $query->orderBy('name', 'asc');
+            }
+        }
+
+        return $query->get()->map(function ($campus) {
             $bestRanking = $campus->campus_rankings->min(function ($campusCampusRanking) {
                 return $campusCampusRanking->rank;
             });
@@ -69,6 +118,57 @@ class CampusController extends Controller
             ];
         });
     }
+
+
+    // all query
+    // public function index()
+    // {
+    //     return Campus::with(['accreditation','district.city.province','campus_rankings.campus_ranking','campus_type','degree_levels'])
+    //     ->get()
+    //     ->map(function ($campus) {
+    //         // Find the best ranking across all ranking sources
+    //         $bestRanking = $campus->campus_rankings->min(function ($campusCampusRanking) {
+    //             return $campusCampusRanking->rank;
+    //         });
+    //         $rankScore = $bestRanking !== null ? $bestRanking : 9999;
+    //         return [
+    //             'id' => $campus->id,
+    //             'name' => $campus->name,
+    //             'description' => $campus->description,
+    //             'date_of_establishment' => $campus->date_of_establishment,
+    //             'logo_path' => $campus->logo_path,
+    //             'address_latitude' => (float) $campus->address_latitude,
+    //             'address_longitude' => (float) $campus->address_longitude,
+    //             'web_address' => $campus->web_address,
+    //             'phone_number' => $campus->phone_number,
+    //             'rank_score' => $rankScore,
+    //             'number_of_graduates' => $campus->number_of_graduates,
+    //             'number_of_registrants' => $campus->number_of_registrants,
+    //             'min_single_tuition' => $campus->min_single_tuition,
+    //             'max_single_tuition' => $campus->max_single_tuition,
+    //             'accreditation_id' => $campus->accreditation_id,
+    //             'district' => ucwords(strtolower($campus->district->name)),
+    //             'district_id' => $campus->district->id,
+    //             'city' => ucwords(strtolower($campus->district->city->name)),
+    //             'city_id' => $campus->district->city->id,
+    //             'province' => ucwords(strtolower($campus->district->city->province->name)),
+    //             'province_id' => $campus->district->city->province->id,
+    //             'campus_type_id' => $campus->campus_type->id,
+    //             'campus_type' => $campus->campus_type->name,
+    //             'accreditation' => [
+    //                 'id' => $campus->accreditation->id,
+    //                 'name' => $campus->accreditation->name,
+    //             ],
+    //             'degree_levels' => $campus->degree_levels->map(function ($degreeLevel) {
+    //                 return [
+    //                     'id' => $degreeLevel->id,
+    //                     'name' => $degreeLevel->name,
+    //                     'duration' => $degreeLevel->duration
+    //                 ];
+    //             }),
+    //         ];
+    //     });
+    // }
 
     /**
      * Store a newly created resource in storage.
