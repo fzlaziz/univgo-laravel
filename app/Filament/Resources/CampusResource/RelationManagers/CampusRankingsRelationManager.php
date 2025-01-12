@@ -9,6 +9,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class CampusRankingsRelationManager extends RelationManager
 {
@@ -20,8 +22,23 @@ class CampusRankingsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\Select::make('campus_ranking_id')
                     ->relationship('campus_ranking', 'source')
-                    ->native(false)
-                    ->required(),
+                    ->required()
+                    ->rule(function () {
+                        $record = $this->getMountedTableActionRecord();
+                        $recordId = $record ? $record->id : null;
+
+                        // debugging purpose
+                        // $duplicateExists = DB::table('campus_campus_ranking')
+                        //     ->where('campus_id', $this->getOwnerRecord()->id)
+                        //     ->where('campus_ranking_id', $this->getMountedTableActionRecord()->campus_ranking_id)
+                        //     ->where('id', '!=', $recordId)
+                        //     ->exists();
+                        // dd($duplicateExists);
+
+                        return Rule::unique('campus_campus_ranking', 'campus_ranking_id')
+                            ->where('campus_id', $this->getOwnerRecord()->id)
+                            ->ignore($recordId, 'id');
+                    }),
                 Forms\Components\TextInput::make('rank')
                     ->required()
                     ->numeric(),

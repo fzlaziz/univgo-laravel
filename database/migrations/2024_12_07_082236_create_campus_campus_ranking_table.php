@@ -20,7 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('campus_ranking_id');
             $table->foreign('campus_ranking_id')->references('id')->on('campus_rankings');
             $table->integer('rank');
-            $table->softDeletes();
+
+            $table->unique(['campus_id', 'campus_ranking_id']);
 
             $table->timestamps();
         });
