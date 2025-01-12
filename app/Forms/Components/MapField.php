@@ -3,7 +3,6 @@
 namespace App\Forms\Components;
 
 use Filament\Forms\Components\Field;
-use Filament\Forms\Components\Concerns\HasState;
 
 class MapField extends Field
 {
@@ -38,8 +37,6 @@ class MapField extends Field
     {
         parent::setUp();
 
-        $this->afterStateUpdated(function (MapField $component, $state) {
-            $this->state($state);
-        });
+        $this->dehydrated(false);
     }
 }
