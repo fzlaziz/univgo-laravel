@@ -199,9 +199,15 @@ class CampusController extends Controller
             },
             'campus_type:id,name',
             'accreditation:id,name',
+            'campus_rankings.campus_ranking'
         ]);
 
         $campusData = $campusData->toArray();
+
+        $bestRanking = collect($campusData['campus_rankings'])->min(function ($campusRanking) {
+            return $campusRanking['rank'];
+        });
+        $campusData['rank_score'] = $bestRanking !== null ? $bestRanking : 9999;
 
         $campusData['campus_type'] = $campusData['campus_type']['name'];
         $campusData['accreditation'] = $campusData['accreditation']['name'];
