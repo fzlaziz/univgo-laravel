@@ -42,14 +42,14 @@ class StudyProgramController extends Controller
          ]);
 
          if ($request->has('search')) {
-             $searchTerm = $request->search;
-             $query->where(function($q) use ($searchTerm) {
-                 $q->where('study_programs.name', 'LIKE', "%{$searchTerm}%")
-                   ->orWhereHas('campus', function($q) use ($searchTerm) {
-                       $q->where('name', 'LIKE', "%{$searchTerm}%");
-                   });
-             });
-         }
+            $searchTerm = strtolower($request->search);
+            $query->where(function($q) use ($searchTerm) {
+                $q->where(DB::raw('lower(study_programs.name)'), 'LIKE', "%{$searchTerm}%")
+                  ->orWhereHas('campus', function($q) use ($searchTerm) {
+                      $q->where(DB::raw('lower(name)'), 'LIKE', "%{$searchTerm}%");
+                  });
+            });
+        }
 
          if ($request->filled('location')) {
              $locationIds = is_array($request->location) ? $request->location : [$request->location];
