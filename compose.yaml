@@ -1,0 +1,78 @@
+services:
+  app:
+    build: .
+    container_name: laravel_octane
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+      - "8443:443"
+      - "8443:443/udp"
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    environment:
+      APP_NAME: UnivGO
+      APP_ENV: production
+      APP_KEY: app_key
+      APP_DEBUG: false
+      APP_URL: https://app.url
+      APP_TIMEZONE: Asia/Jakarta
+      APP_LOCALE: id
+      APP_FALLBACK_LOCALE: en
+      APP_FAKER_LOCALE: id_ID
+      FILESYSTEM_DISK: s3
+      FILAMENT_FILESYSTEM_DISK: s3
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: laravel_user
+      DB_USERNAME: laravel_user
+      DB_PASSWORD: your_password
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
+      AWS_DEFAULT_REGION:
+      AWS_BUCKET:
+      AWS_USE_PATH_STYLE_ENDPOINT:
+      MAIL_MAILER:
+      MAIL_HOST:
+      MAIL_PORT:
+      MAIL_USERNAME:
+      MAIL_PASSWORD:
+      MAIL_ENCRYPTION:
+      MAIL_FROM_ADDRESS:
+      MAIL_FROM_NAME:
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  db:
+    image: postgres:15-alpine
+    container_name: laravel_db
+    restart: always
+    environment:
+      POSTGRES_DB: laravel_user
+      POSTGRES_USER: laravel_user
+      POSTGRES_PASSWORD: your_password
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U laravel_user"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:
