@@ -19,6 +19,10 @@ class DegreeLevelResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
+    protected static ?string $navigationLabel = 'Masa Studi';
+
+    public static ?string $modelLabel = 'Masa Studi';
+
     protected static ?string $navigationGroup = "Master Data";
 
     public static function form(Form $form): Form
@@ -26,9 +30,11 @@ class DegreeLevelResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Masa Studi')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('duration')
+                    ->label('Durasi')
                     ->required()
                     ->numeric(),
             ]);
@@ -39,8 +45,10 @@ class DegreeLevelResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Masa Studi')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('duration')
+                    ->label('Durasi')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

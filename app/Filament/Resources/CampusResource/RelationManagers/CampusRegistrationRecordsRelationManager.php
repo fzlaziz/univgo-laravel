@@ -14,16 +14,22 @@ class CampusRegistrationRecordsRelationManager extends RelationManager
 {
     protected static string $relationship = 'campus_registration_records';
 
+    public static ?string $modelLabel = 'Record Jumlah Pendaftar';
+
+    protected static ?string $title = 'Record Jumlah Pendaftar';
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('year')
+                    ->label('Tahun')
                     ->numeric()
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->maxLength(4),
                 Forms\Components\TextInput::make('total_registrants')
+                    ->label('Jumlah Pendaftar')
                     ->numeric()
                     ->required()
                     ->unique()
@@ -35,8 +41,8 @@ class CampusRegistrationRecordsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('year')
             ->columns([
-                Tables\Columns\TextColumn::make('year')->sortable(),
-                Tables\Columns\TextColumn::make('total_registrants')->sortable(),
+                Tables\Columns\TextColumn::make('year')->sortable()->label('Tahun'),
+                Tables\Columns\TextColumn::make('total_registrants')->sortable()->label('Jumlah Pendaftar'),
             ])
             ->defaultSort('year', 'desc')
             ->filters([
@@ -47,7 +53,9 @@ class CampusRegistrationRecordsRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
-                ->iconButton(),
+                ->iconButton()
+                ->modalHeading('Edit Record Jumlah Pendaftar')
+                ,
                 Tables\Actions\DeleteAction::make()
                 ->iconButton(),
             ])

@@ -15,19 +15,26 @@ class ReviewsRelationManager extends RelationManager
 {
     protected static string $relationship = 'reviews';
 
+    public static ?string $modelLabel = 'Review dan Rating';
+
+    protected static ?string $title = 'Review dan Rating';
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('rating')
+                    ->label('Rating')
                     ->required()
                     ->numeric()
                     ->minValue(1)
                     ->maxValue(5)
                     ->step(1),
                 Forms\Components\Textarea::make('review')
+                    ->label('Review')
                     ->required(),
                 Forms\Components\Select::make('user_id')
+                    ->label('User')
                     ->relationship('user', 'name')
                     ->native(false)
                     ->required()
@@ -49,8 +56,8 @@ class ReviewsRelationManager extends RelationManager
             ->recordTitleAttribute('user.name')
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                ->label('User Name')
-                ->searchable(),
+                    ->label('User Name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('rating')
                     ->label('Rating')
                     ->sortable(),

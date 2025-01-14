@@ -19,13 +19,18 @@ class AccreditationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-bars-arrow-up';
 
+    protected static ?string $navigationLabel = 'Akreditasi';
+
     protected static ?string $navigationGroup = "Master Data";
+
+    public static ?string $modelLabel = 'Akreditasi';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nama Akreditasi')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -36,6 +41,7 @@ class AccreditationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Akreditasi')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

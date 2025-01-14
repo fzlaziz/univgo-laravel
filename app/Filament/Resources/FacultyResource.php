@@ -22,24 +22,33 @@ class FacultyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
-    protected static ?string $navigationGroup = "Campus Data";
+    protected static ?string $navigationGroup = "Data Kampus";
+
+    protected static ?string $navigationLabel = 'Fakultas';
+
+    public static ?string $modelLabel = 'Fakultas';
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nama Fakultas')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
+                    ->label('Deskripsi')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('campus_id')
+                    ->label('Kampus')
                     ->options(Campus::all()->pluck('name', 'id'))
                     ->searchable()
                     ->default(null)
                     ->native(false),
                 Forms\Components\Select::make('master_faculty_id')
+                    ->label('Nama Master Fakultas')
                     ->options(MasterFaculty::all()->pluck('name', 'id'))
                     ->searchable()
                     ->default(null)
@@ -53,17 +62,21 @@ class FacultyResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Fakultas')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Deskripsi')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('campus.name')
+                    ->label('Kampus')
                     ->numeric()
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('master_faculty.name')
+                    ->label('Master Fakultas')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

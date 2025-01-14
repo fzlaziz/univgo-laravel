@@ -66,6 +66,15 @@
                     try {
                         $refs.map.innerHTML = '';
 
+                        const style = document.createElement('style');
+                        style.textContent = `
+                            .leaflet-container { z-index: 5 !important; }
+                            .leaflet-control { z-index: 6 !important; }
+                            .leaflet-popup { z-index: 7 !important; }
+                            .leaflet-overlay-pane { z-index: 2 !important; }
+                        `;
+                        document.head.appendChild(style);
+
                         this.map = L.map($refs.map, {
                             center: [initialLat, initialLng],
                             zoom: 13,
@@ -154,8 +163,8 @@
                     <input
                         type="text"
                         x-model="address"
-                        class="block w-full transition duration-75 rounded-lg shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-inset focus:ring-primary-500 disabled:opacity-70 dark:bg-gray-700 dark:text-white dark:focus:border-primary-500 border-gray-300 dark:border-gray-600"
-                        placeholder="{{ __('Search location...') }}"
+                        class="block w-full transition duration-75 rounded-lg shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-inset focus:ring-primary-500 disabled:opacity-70 dark:text-white dark:focus:border-primary-500 border-gray-300 dark:border-gray-600 dark:bg-gray-800 sm:text-sm sm:leading-6"
+                        placeholder="{{ $getPlaceholder() }}"
                     >
                     <button
                         type="button"

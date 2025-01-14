@@ -19,16 +19,22 @@ class AdmissionRouteResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-arrow-left-end-on-rectangle';
 
+    protected static ?string $navigationLabel = 'Jalur Masuk';
+
     protected static ?string $navigationGroup = "Master Data";
+
+    public static ?string $modelLabel = 'Jalur Masuk';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nama Jalur Masuk')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
+                    ->label('Deskripsi')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -39,9 +45,11 @@ class AdmissionRouteResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Jalur Masuk')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Deskripsi')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

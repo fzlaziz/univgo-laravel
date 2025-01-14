@@ -15,18 +15,24 @@ class GalleriesRelationManager extends RelationManager
     protected static string $relationship = 'galleries';
     protected static string $model = 'gallery';
 
+    public static ?string $modelLabel = 'Galeri Kampus';
+
+    protected static ?string $title = 'Galeri Kampus';
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nama')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
+                    ->label('Deskripsi')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('file_location')
-                    ->label('Upload Gallery Image')
+                    ->label('Upload Foto')
                     ->image()
                     ->disk(env('FILESYSTEM_DISK', 'public'))
                     ->directory('campus-galleries')
@@ -46,7 +52,8 @@ class GalleriesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')->label('Nama')
+                ->searchable(),
             ])
             ->filters([
                 //

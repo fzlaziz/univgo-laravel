@@ -16,17 +16,24 @@ class FacultiesRelationManager extends RelationManager
 {
     protected static string $relationship = 'faculties';
 
+    public static ?string $modelLabel = 'Fakultas';
+
+    protected static ?string $title = 'Fakultas';
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nama Fakultas')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
+                    ->label('Deskripsi')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('master_faculty_id')
+                    ->label('Master Fakultas')
                     ->options(MasterFaculty::all()->pluck('name', 'id'))
                     ->searchable()
                     ->default(null)
@@ -41,6 +48,7 @@ class FacultiesRelationManager extends RelationManager
             ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Fakultas')
                     ->searchable()
                     ->sortable(),
             ])

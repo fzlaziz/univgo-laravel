@@ -14,18 +14,24 @@ class FacilitiesRelationManager extends RelationManager
 {
     protected static string $relationship = 'facilities';
 
+    public static ?string $modelLabel = 'Fasilitas Kampus';
+
+    protected static ?string $title = 'Fasilitas Kampus';
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nama Fasilitas')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
+                    ->label('Deskripsi')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('file_location')
-                    ->label('Upload Facilities Image')
+                    ->label('Upload Foto Fasilitas')
                     ->image()
                     ->disk(env('FILESYSTEM_DISK', 'public'))
                     ->directory('campus-facilities')
@@ -45,7 +51,8 @@ class FacilitiesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')->label('Nama Fasilitas')
+                ->searchable(),
             ])
             ->filters([
                 //

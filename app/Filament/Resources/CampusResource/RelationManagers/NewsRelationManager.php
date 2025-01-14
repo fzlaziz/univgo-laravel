@@ -14,11 +14,17 @@ class NewsRelationManager extends RelationManager
 {
     protected static string $relationship = 'news';
 
+    public static ?string $modelLabel = 'Berita Kampus';
+
+    protected static ?string $title = 'Berita Kampus';
+
+
     public function form(Form $form): Form
     {
         return $form
         ->schema([
             Forms\Components\TextInput::make('title')
+                ->label('Judul Berita')
                 ->required()
                 ->maxLength(255)
                 ->live(onBlur: true)
@@ -29,7 +35,7 @@ class NewsRelationManager extends RelationManager
                     $set('slug', \Illuminate\Support\Str::slug($state));
                 }),
             Forms\Components\FileUpload::make('attachment')
-                ->label('Upload Attachment')
+                ->label('Upload Foto')
                 ->image()
                 ->disk(env('FILESYSTEM_DISK', 'public'))
                 ->directory('news-attachments')
@@ -42,9 +48,11 @@ class NewsRelationManager extends RelationManager
                     '4:3',
                 ]),
             Forms\Components\Textarea::make('excerpt')
+                ->label('Kutipan')
                 ->required()
                 ->columnSpanFull(),
             Forms\Components\RichEditor::make('content')
+                ->label('Konten Berita')
                 ->toolbarButtons([
                     'blockquote',
                     'bold',
@@ -63,6 +71,7 @@ class NewsRelationManager extends RelationManager
                 ->required()
                 ->columnSpanFull(),
             Forms\Components\TextInput::make('slug')
+                ->label('Slug')
                 ->required()
                 ->readOnly()
                 ->maxLength(255),
@@ -75,6 +84,7 @@ class NewsRelationManager extends RelationManager
             ->recordTitleAttribute('title')
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Judul Berita')
                     ->searchable()
                     ->sortable(),
             ])

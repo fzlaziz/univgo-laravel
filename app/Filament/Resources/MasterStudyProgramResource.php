@@ -19,6 +19,10 @@ class MasterStudyProgramResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
+    protected static ?string $navigationLabel = 'Master Program Studi';
+
+    public static ?string $modelLabel = 'Master Program Studi';
+
     protected static ?string $navigationGroup = "Master Data";
 
     public static function form(Form $form): Form
@@ -26,9 +30,11 @@ class MasterStudyProgramResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nama Master Program Studi')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
+                    ->label('Deskripsi')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -39,8 +45,10 @@ class MasterStudyProgramResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Master Program Studi')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Deskripsi')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

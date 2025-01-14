@@ -19,6 +19,10 @@ class CampusTypeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-ellipsis-vertical';
 
+    protected static ?string $navigationLabel = 'Tipe Kampus';
+
+    public static ?string $modelLabel = 'Tipe Kampus';
+
     protected static ?string $navigationGroup = "Master Data";
 
     public static function form(Form $form): Form
@@ -26,6 +30,7 @@ class CampusTypeResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Tipe Kampus')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -36,6 +41,7 @@ class CampusTypeResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Tipe Kampus')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

@@ -24,44 +24,55 @@ class StudyProgramResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationGroup = "Campus Data";
+    protected static ?string $navigationGroup = "Data Kampus";
+
+    protected static ?string $navigationLabel = 'Program Studi';
+
+    public static ?string $modelLabel = 'Program Studi';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nama Program Studi')
                     ->required()
                     ->columnSpanFull()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
+                    ->label('Deskripsi')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\Select::make('campus_id')
+                    ->label('Kampus')
                     ->options(Campus::all()->pluck('name', 'id'))
                     ->required()
                     ->searchable()
                     ->default(null)
                     ->native(false),
                 Forms\Components\Select::make('accreditation_id')
+                    ->label('Akreditasi')
                     ->options(Accreditation::all()->pluck('name', 'id'))
                     ->required()
                     ->searchable()
                     ->default(null)
                     ->native(false),
                 Forms\Components\Select::make('degree_level_id')
+                    ->label('Masa Studi')
                     ->options(DegreeLevel::all()->pluck('name', 'id'))
                     ->required()
                     ->searchable()
                     ->default(null)
                     ->native(false),
                 Forms\Components\Select::make('faculty_id')
+                    ->label('Fakultas')
                     ->options(Faculty::all()->pluck('name', 'id'))
                     ->required()
                     ->searchable()
                     ->default(null)
                     ->native(false),
                 Forms\Components\Select::make('master_study_program_id')
+                    ->label('Master Program Studi')
                     ->options(MasterStudyProgram::all()->pluck('name', 'id'))
                     ->required()
                     ->searchable()
@@ -75,25 +86,31 @@ class StudyProgramResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Program Studi')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('campus.name')
+                    ->label('Kampus')
                     ->numeric()
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('accreditation.name')
+                    ->label('Akreditasi')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('degree_level.name')
+                    ->label('Masa Studi')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('faculty.name')
+                    ->label('Fakultas')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('master_study_program.name')
+                    ->label('Master Program Studi')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

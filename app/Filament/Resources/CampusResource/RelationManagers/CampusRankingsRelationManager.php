@@ -16,11 +16,16 @@ class CampusRankingsRelationManager extends RelationManager
 {
     protected static string $relationship = 'campus_rankings';
 
+    public static ?string $modelLabel = 'Ranking Kampus';
+
+    protected static ?string $title = 'Ranking Kampus';
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('campus_ranking_id')
+                    ->label('Sumber Ranking')
                     ->relationship('campus_ranking', 'source')
                     ->required()
                     ->rule(function () {
@@ -40,6 +45,7 @@ class CampusRankingsRelationManager extends RelationManager
                             ->ignore($recordId, 'id');
                     }),
                 Forms\Components\TextInput::make('rank')
+                    ->label('Ranking')
                     ->required()
                     ->numeric(),
             ]);
@@ -50,14 +56,14 @@ class CampusRankingsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('rank')
             ->columns([
-                Tables\Columns\TextColumn::make('campus_ranking.source'),
-                Tables\Columns\TextColumn::make('rank'),
+                Tables\Columns\TextColumn::make('campus_ranking.source')->label('Sumber Ranking'),
+                Tables\Columns\TextColumn::make('rank')->label('Ranking'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()->label('Add Rank'),
+                Tables\Actions\CreateAction::make()->label('Tambah Ranking'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()

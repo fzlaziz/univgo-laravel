@@ -10,6 +10,8 @@ class ListAccreditations extends ListRecords
 {
     protected static string $resource = AccreditationResource::class;
 
+    
+
     protected function getHeaderActions(): array
     {
         return [

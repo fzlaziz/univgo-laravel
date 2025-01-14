@@ -19,6 +19,10 @@ class CampusRankingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Sumber Ranking Kampus';
+
+    public static ?string $modelLabel = 'Sumber Ranking Kampus';
+
     protected static ?string $navigationGroup = "Master Data";
 
     public static function form(Form $form): Form
@@ -26,6 +30,8 @@ class CampusRankingResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('source')
+                    ->label('Sumber Ranking Kampus')
+                    ->unique()
                     ->required()
                     ->maxLength(255),
             ]);
@@ -36,6 +42,7 @@ class CampusRankingResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('source')
+                    ->label('Sumber Ranking Kampus')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')

@@ -19,13 +19,16 @@ class NewsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static ?string $navigationGroup = "News";
+    protected static ?string $navigationGroup = "Berita Kampus";
+
+    public static ?string $modelLabel = 'Berita Kampus';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
+                    ->label('Judul Berita')
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
@@ -36,7 +39,7 @@ class NewsResource extends Resource
                         $set('slug', \Illuminate\Support\Str::slug($state));
                     }),
                 Forms\Components\FileUpload::make('attachment')
-                    ->label('Upload Attachment')
+                    ->label('Upload Gambar')
                     ->image()
                     ->disk(env('FILESYSTEM_DISK', 'public'))
                     ->directory('news-attachments')
@@ -49,14 +52,17 @@ class NewsResource extends Resource
                         '4:3',
                     ]),
                 Forms\Components\Select::make('campus_id')
+                    ->label('Pilih Kampus')
                     ->relationship('campus', 'name')
                     ->native(false)
                     ->searchable()
                     ->required(),
                 Forms\Components\Textarea::make('excerpt')
+                    ->label('Kutipan')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\RichEditor::make('content')
+                    ->label('Konten Berita')
                     ->toolbarButtons([
                         'blockquote',
                         'bold',
@@ -75,6 +81,7 @@ class NewsResource extends Resource
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('slug')
+                    ->label('Slug')
                     ->required()
                     ->readOnly()
                     ->maxLength(255),
@@ -86,12 +93,15 @@ class NewsResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Judul Berita')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('campus.name')
+                    ->label('Kampus')
                     ->numeric()
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Tanggal Dibuat')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),

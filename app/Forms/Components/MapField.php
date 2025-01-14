@@ -9,6 +9,18 @@ class MapField extends Field
     protected string $view = 'forms.components.map-field';
     protected string $latitudeField = '';
     protected string $longitudeField = '';
+    protected string $placeholder = 'Search Location...';
+
+    public function placeholder(string $placeholder): static
+    {
+        $this->placeholder = $placeholder;
+        return $this;
+    }
+
+    public function getPlaceholder(): string
+    {
+        return $this->placeholder;
+    }
 
     public function latitudeField(string $fieldName): static
     {

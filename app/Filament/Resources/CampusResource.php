@@ -33,67 +33,88 @@ class CampusResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
-    protected static ?string $navigationGroup = "Campus Data";
+    protected static ?string $navigationGroup = "Data Kampus";
+
+    public static ?string $modelLabel = 'Kampus';
+
+    protected static ?string $navigationLabel = 'Kampus';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Section::make(function ($record) {
-                    return $record ? 'Edit Campus' : 'Create Campus';
+                    return $record ? 'Edit Kampus' : 'Tambah Kampus';
                 })
                 ->description(function ($record) {
-                    return $record ? 'Please update the form below to edit the campus.' : 'Please fill in the form below to create a new campus.';
+                    return $record ? 'Mohon update data di bawah untuk merubah data kampus' : 'Mohon isi data di bawah untuk menambahkan data kampus.';
                 })
                     ->schema([
                         Forms\Components\TextInput::make('name')
+                            ->label('Nama Kampus')
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('description')
+                            ->label('Lokasi')
+                            ->placeholder('Kecamatan, Kota')
                             ->required()
                             ->maxLength(255),
                         Forms\Components\DatePicker::make('date_of_establishment')
+                            ->label('Tanggal Berdiri')
                             ->native(false)
                             ->displayFormat('d F Y')
                             ->required(),
                         MapField::make('address_search')
+                            ->label('Cari Koordinat')
+                            ->placeholder('Masukkan Nama Kampus')
                             ->latitudeField('address_latitude')
                             ->longitudeField('address_longitude')
                             ->columnSpanFull(),
                         Forms\Components\TextInput::make('address_latitude')
+                            ->label('Koordinat Latitude')
                             ->required(),
                         Forms\Components\TextInput::make('address_longitude')
+                            ->label('Koordinat Longitude')
                             ->required(),
                         Forms\Components\TextInput::make('web_address')
+                            ->label('Alamat Website')
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('email')
+                            ->label('Email')
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('youtube')
+                            ->label('Link Youtube')
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('instagram')
+                            ->label('Link Instagram')
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('phone_number')
+                            ->label('No Telepon')
                             ->tel()
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('number_of_graduates')
+                            ->label('Jumlah Lulusan')
                             ->required()
                             ->numeric(),
                         Forms\Components\TextInput::make('number_of_registrants')
+                            ->label('Jumlah Pendaftar')
                             ->required()
                             ->numeric(),
                         Forms\Components\TextInput::make('min_single_tuition')
+                            ->label('UKT Terendah')
                             ->numeric()
                             ->default(null),
                         Forms\Components\TextInput::make('max_single_tuition')
+                            ->label('UKT Tertinggi')
                             ->numeric()
                             ->default(null),
                         Forms\Components\Select::make('accreditation_id')
-                            ->label('Accreditation')
+                            ->label('Akreditasi')
                             ->options(Accreditation::all()->pluck('name', 'id'))
                             ->searchable()
                             ->default(null)
@@ -116,10 +137,11 @@ class CampusResource extends Resource
                     ])->columnSpan(2)->columns(2),
                 Group::make()->schema([
                     Section::make('Logo')
-                        ->description('Please upload logo for the campus.')
+                        ->description('Mohon Upload Logo Kampus')
                         ->schema([
                             Forms\Components\FileUpload::make('logo_path')
                             ->label('Upload Logo')
+                            ->required()
                             ->image()
                             ->disk(env('FILESYSTEM_DISK', 'public'))
                             ->directory('campus-logo')
@@ -132,19 +154,21 @@ class CampusResource extends Resource
                                 '1:1',
                             ]),
                         ]),
-                    Section::make('Degree Levels')
-                        ->description('Please select the degree levels that are available in the campus.')
+                    Section::make('Jenjang Studi')
+                        ->description('Mohon Pilih Jenjang Studi yang tersedia di Kampus ini.')
                         ->schema([
                             Forms\Components\Select::make('degree_levels')
-                            ->relationship('degree_levels', 'name')
-                            ->options(DegreeLevel::all()->pluck('name', 'id'))
-                            ->multiple()
+                                ->label('Jenjang Studi')
+                                ->relationship('degree_levels', 'name')
+                                ->options(DegreeLevel::all()->pluck('name', 'id'))
+                                ->multiple()
                         ]),
-                    Section::make('Admission Routes')
-                        ->description('Please select the admission routes that are available in the campus.')
+                    Section::make('Jalur Masuk')
+                        ->description('Mohon Pilih Jalur Masuk yang tersedia di Kampus ini.')
                         ->schema([
                             Forms\Components\CheckboxList::make('admission_routes')
-                            ->relationship(titleAttribute: 'name')
+                                ->label('Nama Jalur Masuk')
+                                ->relationship(titleAttribute: 'name')
                         ]),
                 ])->columnSpan([
                     'default' => 2,
@@ -166,50 +190,31 @@ class CampusResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Kampus')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Deskripsi')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('date_of_establishment')
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('logo_path')
+                    ->label('Tanggal Berdiri')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('address_latitude')
+                    ->label('Koordinat Latitude')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('address_longitude')
-                    ->numeric()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('web_address')
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('phone_number')
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('number_of_graduates')
-                    ->numeric()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('number_of_registrants')
-                    ->numeric()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('min_single_tuition')
-                    ->numeric()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('max_single_tuition')
+                    ->label('Koordinat Longitude')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('accreditation.name')
-                    ->numeric()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('district_id')
+                    ->label('Akreditasi')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('campus_type.name')
+                    ->label('Tipe Kampus')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

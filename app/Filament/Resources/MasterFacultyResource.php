@@ -19,6 +19,10 @@ class MasterFacultyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
+    protected static ?string $navigationLabel = 'Master Fakultas';
+
+    public static ?string $modelLabel = 'Master Fakultas';
+
     protected static ?string $navigationGroup = "Master Data";
 
     public static function form(Form $form): Form
@@ -26,9 +30,11 @@ class MasterFacultyResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nama Master Fakultas')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
+                    ->label('Deskripsi')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -39,8 +45,10 @@ class MasterFacultyResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Master Fakultas')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Deskripsi')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
