@@ -31,6 +31,7 @@ class MasterFacultyResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->label('Nama Master Fakultas')
+                    ->unique()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')

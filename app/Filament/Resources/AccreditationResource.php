@@ -31,6 +31,7 @@ class AccreditationResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->label('Nama Akreditasi')
+                    ->unique()
                     ->required()
                     ->maxLength(255),
             ]);

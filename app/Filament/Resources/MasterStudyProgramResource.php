@@ -31,6 +31,7 @@ class MasterStudyProgramResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->label('Nama Master Program Studi')
+                    ->unique()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')

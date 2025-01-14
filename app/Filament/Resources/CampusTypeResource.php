@@ -31,6 +31,7 @@ class CampusTypeResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->label('Tipe Kampus')
+                    ->unique()
                     ->required()
                     ->maxLength(255),
             ]);

@@ -58,7 +58,7 @@ class StudyProgramResource extends Resource
                     ->default(null)
                     ->native(false),
                 Forms\Components\Select::make('degree_level_id')
-                    ->label('Masa Studi')
+                    ->label('Jenjang Studi')
                     ->options(DegreeLevel::all()->pluck('name', 'id'))
                     ->required()
                     ->searchable()
@@ -100,7 +100,7 @@ class StudyProgramResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('degree_level.name')
-                    ->label('Masa Studi')
+                    ->label('Jenjang Studi')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
