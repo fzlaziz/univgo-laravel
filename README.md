@@ -15,6 +15,7 @@ Backend service dan admin page untuk **UnivGO**, mendukung aplikasi **UnivGO-Flu
 * **Rating dan Ulasan Kampus**: 
 Menampilkan rating dan ulasan dari mahasiswa dan alumni untuk setiap kampus, membantu calon mahasiswa dalam memilih kampus yang tepat.
 * **Berita Kampus**: Menyediakan berita terkini terkait kampus.
+* **Manajemen Data Kampus**: Panel Admin untuk semua keperluan manajemen data dengan Laravel x Filament.
 
 ## Instalasi dan Penggunaan
 
@@ -66,9 +67,20 @@ Menampilkan rating dan ulasan dari mahasiswa dan alumni untuk setiap kampus, mem
 
 6. **Serve App**
 
+   Tambahkan Akun Admin untuk Panel Admin
+   ```bash
+   php artisan make:filament-user
+   ```
    Jalankan server development Laravel:
    ```bash
    php artisan serve
    ```
 
-   Akses aplikasi di `http://localhost:8000`. dan panel admin di `/admin`
+   Akses aplikasi di `http://localhost:8000` dan Panel Admin di `/admin`
+
+   Alternative Serve : Laravel Octane dengan  FrankenPHP with Docker
+
+   ```
+   docker compose up -d
+   ```
+   Akses dengan `http://localhost:8000` atau ganti port aplikasi di compose.yaml
