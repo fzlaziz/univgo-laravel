@@ -86,7 +86,7 @@
                                 UnivGO memudahkan kamu menemukan kampus terdekat, top 10 PTN, politeknik, dan swasta terbaik, serta berita kampus dan fitur pencarian program studi.
                             </p>
                             <ul>
-                                <li><a class="main-btn main-btn-2 wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="1.4s" href="https://github.com/fzlaziz/univgo-flutter/releases">Download App</a></li>
+                                <li><a class="main-btn main-btn-2 wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="1.4s" href="https://github.com/fzlaziz/univgo-flutter/releases/download/v1.0.1/univgo-release.apk">Download App</a></li>
                             </ul>
                         </div> <!-- header hero content -->
                     </div>
@@ -254,8 +254,6 @@
                                 <li data-target="#carouselData2" data-slide-to="4"></li>
                                 <li data-target="#carouselData2" data-slide-to="5"></li>
                                 <li data-target="#carouselData2" data-slide-to="6"></li>
-                                <li data-target="#carouselData2" data-slide-to="7"></li>
-                                <li data-target="#carouselData2" data-slide-to="8"></li>
                               </ol>
                             <div class="carousel-inner">
                               <div class="carousel-item active">
@@ -319,9 +317,9 @@
                 <div class="col-lg-6 order-5 order-lg-1">
                     <div class="about_content mt-45 wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.5s">
                         <div class="section_title">
-                            <h4 class="title">Pencarian dan Filter Pencarian</h4>
+                            <h4 class="title">Pencarian Kampus dan Program Studi</h4>
                             <p>
-                                Dirancang untuk membantu pengguna menemukan kampus yang sesuai dengan kebutuhan mereka. Dengan fitur ini, pengguna dapat mencari kampus berdasarkan nama, lokasi, jurusan, akreditasi, atau biaya pendidikan. Selain itu, terdapat filter tambahan untuk menyortir hasil pencarian berdasarkan level studi, kategori seperti PTN, PTS, atau Politeknik, lokasi kampus, serta akreditasi kampus.
+                                Dirancang untuk membantu pengguna menemukan kampus yang sesuai dengan kebutuhan mereka. Dengan fitur ini, pengguna dapat mencari kampus berdasarkan nama, lokasi, jurusan, dan akreditasi. Selain itu, terdapat fitur filter tambahan untuk menyortir hasil pencarian berdasarkan level studi, kategori seperti PTN, PTS, atau Politeknik, lokasi kampus, serta akreditasi kampus.
                             </p>
                         </div>
                         <!-- <a class="main-btn" href="#">Discover</a> -->
@@ -437,7 +435,7 @@
                     <p>Find Your Campus, Everywhere Anytime</p>
                     <ul>
                         <li>
-                            <a class="main-btn main-btn-2 d-flex align-items-center" href="https://github.com/fzlaziz/univgo-flutter/releases">Download App</a>
+                            <a class="main-btn main-btn-2 d-flex align-items-center" href="https://github.com/fzlaziz/univgo-flutter/releases/download/v1.0.1/univgo-release.apk">Download App</a>
                         </li>
                     </ul>
                 </div>  <!-- download app content -->
