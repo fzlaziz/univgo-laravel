@@ -54,6 +54,10 @@ class CampusResource extends Resource
                             ->label('Nama Kampus')
                             ->required()
                             ->maxLength(255),
+                        Forms\Components\TextInput::make('alias')
+                            ->label('Nama Alias Kampus')
+                            ->required()
+                            ->maxLength(255),
                         Forms\Components\TextInput::make('description')
                             ->label('Lokasi')
                             ->placeholder('Kecamatan, Kota')

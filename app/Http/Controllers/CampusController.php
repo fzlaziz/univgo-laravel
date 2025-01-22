@@ -32,7 +32,10 @@ class CampusController extends Controller
 
         if ($request->has('search')) {
             $searchTerm = strtolower($request->search);
-            $query->where(DB::raw('lower(name)'), 'LIKE', "%{$searchTerm}%");
+            $query->where(function($q) use ($searchTerm) {
+                $q->where(DB::raw('lower(name)'), 'LIKE', "%{$searchTerm}%")
+                  ->orWhere(DB::raw('lower(alias)'), 'LIKE', "%{$searchTerm}%");
+            });
         }
 
         if ($request->filled('location')) {

@@ -46,7 +46,8 @@ class StudyProgramController extends Controller
             $query->where(function($q) use ($searchTerm) {
                 $q->where(DB::raw('lower(study_programs.name)'), 'LIKE', "%{$searchTerm}%")
                   ->orWhereHas('campus', function($q) use ($searchTerm) {
-                      $q->where(DB::raw('lower(name)'), 'LIKE', "%{$searchTerm}%");
+                      $q->where(DB::raw('lower(name)'), 'LIKE', "%{$searchTerm}%")
+                        ->orWhere(DB::raw('lower(alias)'), 'LIKE', "%{$searchTerm}%");
                   });
             });
         }
